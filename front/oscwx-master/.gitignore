@@ -1,0 +1,16 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+selenium-debug.log
+test/unit/coverage
+test/e2e/reports
+/src混用
+/src2
+/dist1
+/dist2
+/dist3
+/dist-ajax
+/dist-ajax-end
+/dist-samepath
+/ajax-src
