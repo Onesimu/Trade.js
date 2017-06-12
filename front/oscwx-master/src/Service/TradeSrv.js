@@ -61,7 +61,7 @@ export class TradeSrv {
 		data[56] = '001';
 		var str = this.sendMsg(data);
 		//      this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -84,7 +84,7 @@ export class TradeSrv {
 		}
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -102,7 +102,7 @@ export class TradeSrv {
 		data[44] = this.num++;
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -131,7 +131,7 @@ export class TradeSrv {
 		data[42] = "01";
 		var str = this.sendMsg(data);
 		//this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -163,7 +163,7 @@ export class TradeSrv {
 
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -195,7 +195,7 @@ export class TradeSrv {
 		data[24] = obj.hms;
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -219,7 +219,7 @@ export class TradeSrv {
 		data[1] = account;
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -239,7 +239,7 @@ export class TradeSrv {
 		data[30] = md5(newPwd);
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -265,7 +265,7 @@ export class TradeSrv {
 		data[44] = this.num++;
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -289,7 +289,7 @@ export class TradeSrv {
 		data[44] = this.num++;
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -313,7 +313,7 @@ export class TradeSrv {
 		}
 		var str = this.sendMsg(data);
 		//      this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -331,7 +331,7 @@ export class TradeSrv {
 		data[1] = account;
 		var str = this.sendMsg(data);
 		//      this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -353,7 +353,7 @@ export class TradeSrv {
 		data[38] = obj.price;
 		var str = this.sendMsg(data);
 		//      this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");
@@ -378,7 +378,7 @@ export class TradeSrv {
 		data[54] = obj.tuijianNum;
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/stockApi/getLineMarketTest", {
+		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
 			var arr = data.split("/");

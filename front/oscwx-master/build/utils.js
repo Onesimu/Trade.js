@@ -30,7 +30,7 @@ exports.cssLoaders = function(options) {
 	}
 
 	// http://vuejs.github.io/vue-loader/configurations/extract-css.html
-	const REM_UNIT = 14;
+	const REM_UNIT = 16;
 	let px2rem = `px2rem?remUnit=${REM_UNIT}&remPrecision=4`;
 	return {
 		css: generateLoaders(['css', px2rem]),
