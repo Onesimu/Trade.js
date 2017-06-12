@@ -57,7 +57,7 @@
 	
 	#tradInfo .view {
 		width: 100%;
-		height: 300px;
+		height: 200px;
 		background: #E9F2FA;
 		margin-bottom: 10px;
 	}
@@ -162,7 +162,7 @@
 		float: left;
 		line-height: 40px;
 		text-align: center;
-		font-size: 20px;
+		font-size: 16px;
 		color: #fff;
 	}
 	
@@ -179,13 +179,13 @@
 		background: green;
 	}
 	
-	ul,
+	#tradInfo ul,
 	li {
 		list-style: none;
 		padding: 0;
 	}
 	
-	a {
+	#tradInfo a {
 		text-decoration: none;
 	}
 	

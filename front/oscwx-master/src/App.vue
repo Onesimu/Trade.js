@@ -148,7 +148,7 @@
 	}
 	
 	.tabbarItem.iconfont {
-		font-size: 23px;
+		font-size: 20px;
 		position: absolute;
 		top: -2px;
 		color: #888;
