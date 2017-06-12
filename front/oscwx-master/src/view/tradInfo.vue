@@ -1,8 +1,5 @@
 <template>
 	<div id="tradInfo">
-		<!--<div class="view">
-                视图5553
-            </div>-->
 
 		<div class="viewTxt" v-if="hotData[key]">
 			<div class="row first" v-show="isLogin">
@@ -36,16 +33,16 @@
 		<div class=mh-group>
 			<ul>
 				<li>
-					<a href=javascript:void(0); @click=fenshiChart()>分时</a>
+					<a @click=fenshiChart>分时</a>
 				</li>
 				<li>
-					<a href=javascript:void(0); @click=oneMinChart(1)>1分钟</a>
+					<a @click=oneMinChart(1)>1分钟</a>
 				</li>
 				<li>
-					<a href=javascript:void(0); @click=oneMinChart(5)>5分钟</a>
+					<a @click=oneMinChart(5)>5分钟</a>
 				</li>
 				<li>
-					<a href=javascript:void(0); @click=oneMinChart(30)>30分钟</a>
+					<a @click=oneMinChart(30)>30分钟</a>
 				</li>
 		</div>
 	</div>
@@ -250,17 +247,16 @@
 				}
 				window.location.hash = "/myHold/0/";
 			},
-			fenshiChart: function() {
-				var v_min = $("[name='charSelectName']").val();
-				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
+			fenshiChart() {
+				//				var v_min = $("[name='charSelectName']").val();
+				//				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
+				let v_code = this.key;
 				tickChart(v_code);
 			},
-			oneMinChart: function(v_min) {
-				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
-				candle(v_code, v_min)
-			},
-			fiveMinChart: function() {
-				alert(3)
+			oneMinChart(v_min) {
+				//				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
+				let v_code = this.key;
+				candle(v_code, v_min);
 			},
 			highEvent() {
 				//v-link="{name:'order',params:{type:1,id:key}}"

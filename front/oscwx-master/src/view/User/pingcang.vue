@@ -7,6 +7,10 @@
             <x-button type="primary" @click="sure">确定平仓</x-button>
             <x-button type="default" @click="cancel">取消操作</x-button>
         </div>
+        <loading :show="loadShow" text="">
+            <p>请求处理中,请稍等......</p>
+            <p>{{daojishi}}s</p>
+        </loading>
         <alert :show.sync="pcState.isShow" :title="pcState.msg" button-text="确定" @on-hide="onHide">
             <div style="text-align:center;">
                 <p>合约代码:{{pcState.code}}</p>
@@ -27,6 +31,7 @@
     import Group from "vux/src/components/group"
     import XNumber from "vux/src/components/x-number"
     import XButton from "vux/src/components/x-button"
+    import loading from "vux/src/components/loading"
     import Alert from "vux/src/components/alert"
     export default{
         vuex:{
@@ -43,14 +48,51 @@
         },
         data(){
             return{
-                index : 0
+                index : 0,
+                loadShow : false,
+                timeHandle  : null,
+                time  : 30,
+                isAlter : false
             }
         },
         components:{
             Group,
             XNumber,
             XButton,
+            loading,
             Alert
+        },
+        watch:{
+            'pcState': {
+                handler: function (val, oldVal) {
+                    this.start = false;
+                    this.time = 30;
+                    this.loadShow = false;
+                    this.isAlter = true;
+                    if(this.pcState.state == "00"){
+                        this.alterContent = '';
+                    }else{
+                        this.alterContent = '';
+                    }
+                },
+                deep: true
+            }
+        },
+        computed:{
+            daojishi(){
+                if(this.loadShow == false){
+                    return;
+                }
+                var self = this;
+                window.clearTimeout(this.timeHandle);
+                if(this.time == 0){
+                    this.time = 30;
+                }
+                this.timeHandle = window.setTimeout(function () {
+                    self.time--;
+                },1000);
+                return this.time;
+            }
         },
         methods:{
             cancel(){
@@ -74,6 +116,9 @@
                     hms : hms,
                     id : id
                 });
+                this.loadShow = true;
+                this.start = true;
+                this.time =30;
             },
             onHide(){
                 var index = this.index;
