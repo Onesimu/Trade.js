@@ -190,7 +190,7 @@ function candle(markcode, minute) {
 	$(".highcharts-range-selector-buttons").css("display", "none");
 	$.getJSON(getContextPath() + '/app/service/stockApi/getManyMinuteMarket', {
 		minute: minute,
-		metcalSymbol: markcode.toUpperCase()
+		metcalSymbol: markcode
 	}, function(data) {
 		highcharts.series[0].setData([]);
 		highcharts.series[0].setData(data);
@@ -211,7 +211,7 @@ function tickChart(metcal_symbol) {
 	var v_data = [];
 	$.ajaxSettings.async = false;
 	$.getJSON(getContextPath() + '/app/service/stockApi/getLineMarket', {
-		metcalSymbol: v_metcal_symbol.toUpperCase()
+		metcalSymbol: v_metcal_symbol
 	}, function(data) {
 		data.forEach(function(e) {
 			v_data.push({
@@ -240,7 +240,7 @@ function tickChart(metcal_symbol) {
 					}
 					interval = setInterval(function() {
 						$.getJSON(getContextPath() + '/app/service/stockApi/getLineMarket', {
-							metcalSymbol: v_metcal_symbol.toUpperCase()
+							metcalSymbol: v_metcal_symbol
 						}, function(data) {
 							v_data = new Array();
 							data.forEach(function(e) {
