@@ -390,6 +390,7 @@ export const getPingCang = (state, obj) => {
 		obj = {
 			msg : "网络异常"
 		};
+		pcId="";
 	}
 	obj.isShow = true;
 	state.dispatch(Types.pcOrder, obj);
