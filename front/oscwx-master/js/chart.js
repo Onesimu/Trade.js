@@ -58,7 +58,7 @@ function candle(markcode, minute) {
 						if(myDate.getSeconds() == 0) {
 							$.getJSON(getContextPath() + '/app/service/stockApi/getManyMinuteMarket', {
 								minute: minute,
-								metcalSymbol: markcode.toUpperCase()
+								metcalSymbol: markcode
 							}, function(data) {
 								highcharts.series[0].setData([]);
 								highcharts.series[0].setData(data);
