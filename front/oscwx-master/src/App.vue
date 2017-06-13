@@ -132,6 +132,14 @@
 		z-index: 100;
 	}
 	
+	.weui_tabbar_item {
+		padding: 3px 0 0;
+	}
+	
+	.weui_tabbar_icon+.weui_tabbar_label {
+		margin-top: 1px
+	}
+	
 	.weui_tab_bd {
 		padding-top: 46px;
 		background-color: #edf0f5;
