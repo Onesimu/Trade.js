@@ -1,7 +1,7 @@
-function charSelect(t) {
-	var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
-	candle(v_code, t.value);
-}
+//function charSelect(t) {
+//	var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
+//	candle(v_code, t.value);
+//}
 
 var highcharts;
 var interval;

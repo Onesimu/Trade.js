@@ -30,16 +30,16 @@ exports.cssLoaders = function(options) {
 	}
 
 	// http://vuejs.github.io/vue-loader/configurations/extract-css.html
-	const REM_UNIT = 16;
-	let px2rem = `px2rem?remUnit=${REM_UNIT}&remPrecision=4`;
+//	const REM_UNIT = 75;
+//	let px2rem = `px2rem?remUnit=${REM_UNIT}&remPrecision=8&threeVersion=true`;
 	return {
-		css: generateLoaders(['css', px2rem]),
-		postcss: generateLoaders(['css', px2rem]),
-		less: generateLoaders(['css', px2rem, 'less']),
-		sass: generateLoaders(['css', px2rem, 'sass?indentedSyntax']),
-		scss: generateLoaders(['css', px2rem, 'sass']),
-		stylus: generateLoaders(['css', px2rem, 'stylus']),
-		styl: generateLoaders(['css', px2rem, 'stylus'])
+		css: generateLoaders(['css']),
+		postcss: generateLoaders(['css']),
+		less: generateLoaders(['css', 'less']),
+		sass: generateLoaders(['css', 'sass?indentedSyntax']),
+		scss: generateLoaders(['css', 'sass']),
+		stylus: generateLoaders(['css', 'stylus']),
+		styl: generateLoaders(['css', 'stylus'])
 	}
 }
 

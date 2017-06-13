@@ -41,6 +41,16 @@
 		margin-top: 10px;
 		padding: 10px;
 	}
+	
+	#order .vux-number-selector {
+		height: 26px;
+		font-size: 25px;
+		color: #268bf2;
+	}
+	
+	#order .vux-number-input {
+		height: 26px;
+	}
 </style>
 <script>
 	import { setOpenOrder } from "vuex/actions"

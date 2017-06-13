@@ -1,6 +1,6 @@
-function p(val) {
-	console.info(val);
-}
+//function p(val) {
+//	console.info(val);
+//}
 
 function getContextPath() {
 	var pathName = document.location.pathname;

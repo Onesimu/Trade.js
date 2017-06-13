@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="pingcang">
         <group :title="myHold[index].tradName">
             <x-number id="pcNum" title="平仓手数" :min=1 :max="parseInt(myHold[index].holdNum)" :value="parseInt(myHold[index].holdNum)"></x-number>
         </group>
@@ -24,6 +24,16 @@
 </template>
 <style lang="less">
     .pcoper{padding: 10px;}
+    
+    #pingcang .vux-number-selector {
+		height: 26px;
+		font-size: 25px;
+		color: #268bf2;
+	}
+	
+	#pingcang .vux-number-input {
+		height: 26px;
+	}
 </style>
 
 <script>
