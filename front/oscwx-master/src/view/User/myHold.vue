@@ -194,21 +194,6 @@
 			kong() {
 				return 2;
 			}
-			//			,
-			//			winPrice() {
-			//				var pri = this.endRes[this.index].highPrice;
-			//				if(pri == "0") {
-			//					return '--';
-			//				}
-			//				return pri;
-			//			},
-			//			lossPrice() {
-			//				var pri = this.endRes[this.index].lowPrice;
-			//				if(pri == "0") {
-			//					return '--';
-			//				}
-			//				return pri;
-			//			}
 		},
 		route: {
 			data(res) {
