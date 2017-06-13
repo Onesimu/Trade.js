@@ -12,6 +12,10 @@
 		<alert :show.sync="errPrice" title="提示" button-text="确定">
 			<div id="priceHint" style="text-align: center;"></div>
 		</alert>
+		<loading :show="loadShow" text="">
+			<p>请求处理中,请稍等......</p>
+			<p>{{daojishi}}s</p>
+		</loading>
 		<alert :show.sync="winLossState.isShow" title="提示" button-text="确定" @on-hide="onHide">
 			<div style="text-align: center;">
 				<p>{{winLossState.state=="00"?'操作成功':'操作失败'}}</p>
@@ -39,6 +43,7 @@
 	import Alert from "vux/src/components/alert"
 	import Cell from "vux/src/components/cell"
 	import xNumber from "vux/src/components/x-number"
+	import loading from "vux/src/components/loading"
 	export default {
 		vuex: {
 			getters: {
@@ -57,7 +62,11 @@
 			return {
 				index: 0,
 				errPrice: false,
-				minUnit: 0.5
+				minUnit: 0.5,
+				loadShow: false,
+				timeHandle: null,
+				time: 30,
+				isAlter: false
 			}
 		},
 		ready() {
@@ -117,6 +126,9 @@
 					hms: hms,
 					id: id,
 				});
+				this.loadShow = true;
+				this.start = true;
+				this.time = 30;
 			},
 			onHide() {
 				this.cancel();
@@ -163,6 +175,20 @@
 					return 0.00;
 				}
 				return pri;
+			},
+			daojishi() {
+				if(this.loadShow == false) {
+					return;
+				}
+				var self = this;
+				window.clearTimeout(this.timeHandle);
+				if(this.time == 0) {
+					this.time = 30;
+				}
+				this.timeHandle = window.setTimeout(function() {
+					self.time--;
+				}, 1000);
+				return this.time;
 			}
 		},
 		components: {
@@ -171,7 +197,24 @@
 			XInput,
 			Alert,
 			Cell,
-			xNumber
+			xNumber,
+			loading
+		},
+		watch: {
+			'winLossState': {
+				handler: function(val, oldVal) {
+					this.start = false;
+					this.time = 30;
+					this.loadShow = false;
+					this.isAlter = true;
+					if(this.winLossState.state == "00") {
+						this.alterContent = '';
+					} else {
+						this.alterContent = '';
+					}
+				},
+				deep: true
+			}
 		},
 		route: {
 			data(res) {
