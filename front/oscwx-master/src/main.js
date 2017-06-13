@@ -38,7 +38,7 @@ router.beforeEach(function(trans) {
 			Bshow: true
 		});
 		trans.next();
-		candle(trans.to.params.id, 1);
+//		candle(trans.to.params.id, 1);
 	} else if(path == "/login") {
 		setHeadMsg(store, {
 			title: "登录",

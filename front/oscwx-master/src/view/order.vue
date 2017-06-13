@@ -13,6 +13,7 @@
 			</group>
 			<div class="order_bottom">
 				<x-button :disabled="isClick" :type="this.type==1?'warn':'primary'" @click="clickBtn">{{this.type==1?'确定买涨':'确定买跌'}}</x-button>
+				<x-button type="default" @click="cancel">取消</x-button>
 			</div>
 			<loading :show="loadShow" text="">
 				<p>请求处理中,请稍等......</p>
@@ -206,6 +207,10 @@
 			},
 			onHide() {
 				window.history.go(-1);
+				//				v-link="{ name: 'tradInfo', params: { id: item.code,name:item.cn,cur:item.cur}}"
+			},
+			cancel() {
+				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
 			}
 		},
 		ready() {

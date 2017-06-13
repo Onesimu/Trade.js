@@ -76,9 +76,6 @@
 			}
 		},
 		methods: {
-			cancel() {
-				window.location.hash = "/myHold/" + this.index;
-			},
 			sure() {
 				if(this.price == "") {
 					return;
@@ -129,6 +126,9 @@
 				this.loadShow = true;
 				this.start = true;
 				this.time = 30;
+			},
+			cancel() {
+				window.location.hash = "/myHold/" + this.index;
 			},
 			onHide() {
 				this.cancel();

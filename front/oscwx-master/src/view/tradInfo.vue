@@ -295,7 +295,8 @@
 			if(this.isLogin) {
 				this.getUserMoney(this.account);
 				this.setMyHold(this.account);
-			}
+			};
+			candle(this.key, 1);
 		},
 		computed: {
 			yingkui() {
