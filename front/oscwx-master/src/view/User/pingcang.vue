@@ -30,7 +30,7 @@
 	#pingcang .vux-number-selector {
 		height: 26px;
 		font-size: 25px;
-		color: #268bf2;
+		/*color: #268bf2;*/
 	}
 	
 	#pingcang .vux-number-input {

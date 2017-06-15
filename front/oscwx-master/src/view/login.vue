@@ -12,12 +12,7 @@
 			<p>请求处理中,请稍等......</p>
 			<p>{{daojishi}}s</p>
 		</loading>
-		<toast :show.sync="isShow" type="text">{{toastTxt}}</toast>
-		<alert :show.sync="isShow" title="提示" button-text="确定">
-			<div style="text-align: center;">
-				{{{alterContent}}}
-			</div>
-		</alert>
+		<toast :show.sync="isAlter" type="text">{{toastTxt}}</toast>
 	</div>
 </template>
 <style lang="less">
@@ -89,6 +84,7 @@
 				this.loadShow = true;
 				this.start = true;
 				this.time = 30;
+				this.isAlter = false;
 			},
 			reset() {
 				window.location.hash = "reset";
@@ -100,7 +96,7 @@
 					this.start = false;
 					this.time = 0;
 					this.loadShow = false;
-					this.isAlter = true;
+					this.isAlter = this._isShow;
 					if(this.toastTxt != "") {
 						this.alterContent = this.toastTxt;
 					} else {
@@ -133,7 +129,7 @@
 				if(this.time == -1) {
 					//					this.time = 30;
 					this.loadShow == false;
-					this.isAlter = true;
+					this.isAlter = this._isShow;
 					return;
 				}
 				this.timeHandle = window.setTimeout(function() {
