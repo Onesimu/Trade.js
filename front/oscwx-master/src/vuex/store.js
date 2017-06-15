@@ -27,7 +27,8 @@ const state = {
     loginState:{
         isDisabledLoginBtn : false,
         isShowToast : false,
-        toastTxt : "默认"
+        toastTxt : "默认",
+        loginCnt : 0
     },
     //账户资金接收
     userMoney:[],
@@ -113,6 +114,7 @@ const mutations = {
         obj.hasOwnProperty("isDisabledLoginBtn") && (state.loginState.isDisabledLoginBtn = obj.isDisabledLoginBtn);
         obj.hasOwnProperty("isShowToast") && (state.loginState.isShowToast = obj.isShowToast);
         obj.hasOwnProperty("toastTxt") && (state.loginState.toastTxt = obj.toastTxt);
+        obj.hasOwnProperty("loginCnt") && (state.loginState.loginCnt = obj.loginCnt);
     },
     [Types.UserMoney](state,obj){
         state.userMoney = obj;

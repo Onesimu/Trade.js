@@ -114,6 +114,7 @@ export const setUserState = ({
 }, val) => {
 	dispatch(Types.UserState, val);
 }
+let loginCnt = 0;
 //用户登录
 export const LoginEvent = ({
 	dispatch
@@ -125,6 +126,7 @@ export const LoginEvent = ({
 	Pwd = pwd;
 	//	userSrv.loginUser(account, pwd);
 	tradeSrv.loginUser(account, pwd);
+
 }
 //登录状态信息
 export const LoginState = ({
@@ -148,6 +150,7 @@ export const logoutEvent = ({
 	});
 	dispatch(Types.LoginState, {
 		isDisabledLoginBtn: false,
+		loginCnt: 0
 	});
 	window.location.hash = "/default";
 }
@@ -177,11 +180,15 @@ export const getLoginInfo = (store, obj) => {
 		//		userSrv.setMarketFengKong(Account);
 		tradeSrv.setMarketFengKong(Account);
 	} else {
+		loginCnt++;
 		store.dispatch(Types.LoginState, {
 			isDisabledLoginBtn: false,
 			isShowToast: true,
-			toastTxt: "用户名或者密码错误"
-		})
+			//			toastTxt: "用户名或者密码错误"
+			toastTxt: obj.msg,
+			loginCnt: loginCnt
+		});
+		
 	}
 }
 //风控持仓保证金信息 接收
@@ -349,6 +356,9 @@ export const getMyHold = (state, str, num) => {
 			data.push(rowObj);
 		}
 	}
+	data.sort(function(a, b) {
+		return b.id - a.id;
+	});
 	state.dispatch(Types.myHold, data);
 }
 
@@ -386,11 +396,11 @@ export const setPingCang = ({
 //接收平仓的数据
 export const getPingCang = (state, obj) => {
 	//	obj.isShow = true && (pcId == obj.id);
-	if(obj.state === "00" && pcId !==obj.id) {
+	if(obj.state === "00" && pcId !== obj.id) {
 		obj = {
-			msg : "网络异常"
+			msg: "网络异常"
 		};
-		pcId="";
+		pcId = "";
 	}
 	obj.isShow = true;
 	state.dispatch(Types.pcOrder, obj);

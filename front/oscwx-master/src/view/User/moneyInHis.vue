@@ -16,8 +16,8 @@
             <acc :show = "$index==0" :class="{'firstAcc':$index==0}">
                 <div class="acc_left" slot="left">
                     <span class="name">入金时间：{{item.time}}</span>
-                    <span class="winLoss">金额：{{item.money}}</span>
-                    <span class="winLoss">状态：{{item.state}}</span>
+                    <span class="val">金额：{{item.money}}</span>
+                    <span class="val">状态：{{item.state}}</span>
                 </div>
                 <div slot="body">
                     <div class="name">
