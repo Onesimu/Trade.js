@@ -40,13 +40,14 @@
 	import loading from "vux/src/components/loading"
 	//vux
 	import store from "vuex/store"
-	import { LinkMarket, LinkUser, LinkTrade, logoutEvent } from "vuex/actions"
+	import { LinkMarket, LinkUser, LinkTrade, logoutEvent, setMarketFengKong } from "vuex/actions"
 
 	export default {
 		store,
 		vuex: {
 			getters: {
 				isLogin: (state) => state.userInfo.isLogin,
+				account: (state) => state.userInfo.account,
 				hotData: (state) => state.hotContract,
 				title: (state) => state.header.title, //标题
 				Rshow: (state) => state.header.Rshow, //右面显示的内容
@@ -73,7 +74,8 @@
 				LinkMarket,
 				LinkUser,
 				LinkTrade,
-				logoutEvent
+				logoutEvent,
+				setMarketFengKong
 			}
 		},
 		methods: {
@@ -86,12 +88,22 @@
 			},
 			registered() {
 				window.location.hash = "/regist";
+			},
+			queryFengKong() {
+				if(this.isLogin) {
+					this.setMarketFengKong(this.account);
+				} else {
+					this.setMarketFengKong(111356);
+				}
 			}
 		},
 		ready() {
 			this.LinkMarket(); //行情
 			this.LinkUser(); //交易
 			this.LinkTrade();
+			this.queryFengKong();
+			clearTimeout(window.getFengKong);
+			window.getFengKong = setInterval(this.queryFengKong, 1000 * 60 * 10);
 		},
 		components: {
 			viewBox,
@@ -99,6 +111,14 @@
 			tabbar,
 			tabbarItem,
 			loading
+		},
+		events: {
+			"hide" () {
+				clearInterval(window.getFengKong);
+			}
+		},
+		beforeRouteLeave(to, from, next) {
+			clearInterval(window.getFengKong);
 		}
 	}
 </script>

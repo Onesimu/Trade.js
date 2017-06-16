@@ -44,6 +44,7 @@
 				<li>
 					<a @click=oneMinChart(30)>30分钟</a>
 				</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -247,17 +248,6 @@
 				}
 				window.location.hash = "/myHold/0/";
 			},
-			fenshiChart() {
-				//				var v_min = $("[name='charSelectName']").val();
-				//				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
-				let v_code = this.key;
-				tickChart(v_code);
-			},
-			oneMinChart(v_min) {
-				//				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
-				let v_code = this.key;
-				candle(v_code, v_min);
-			},
 			highEvent() {
 				//v-link="{name:'order',params:{type:1,id:key}}"
 				if(!this.isLogin) {
@@ -273,6 +263,17 @@
 					return;
 				}
 				window.location.hash = "/order/-1/" + this.key;
+			},
+			fenshiChart() {
+				//				var v_min = $("[name='charSelectName']").val();
+				//				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
+				let v_code = this.key;
+				tickChart(v_code);
+			},
+			oneMinChart(v_min) {
+				//				var v_code = $("#tradInfo .viewTxt .row.two .tradName span:eq(1)").text();
+				let v_code = this.key;
+				candle(v_code, v_min);
 			}
 		},
 		components: {
@@ -377,13 +378,13 @@
 		},
 		events: {
 			"hide" () {
-				clearTimeout(window.interval);
+				clearInterval(window.interval);
 			}
 		},
 		beforeRouteLeave(to, from, next) {
 			// 导航离开该组件的对应路由时调用
 			// 可以访问组件实例 `this`
-			clearTimeout(window.interval);
+			clearInterval(window.interval);
 		}
 	}
 </script>

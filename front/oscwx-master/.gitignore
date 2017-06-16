@@ -15,3 +15,4 @@ test/e2e/reports
 /dist-samepath
 /ajax-src
 /dist-login
+/dist-stable

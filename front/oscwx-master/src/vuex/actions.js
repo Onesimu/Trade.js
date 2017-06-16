@@ -188,31 +188,96 @@ export const getLoginInfo = (store, obj) => {
 			toastTxt: obj.msg,
 			loginCnt: loginCnt
 		});
-		
+
 	}
 }
+
+//请求风控持仓保证金信息数据
+export const setMarketFengKong = ({
+	dispatch
+}, account) => {
+	tradeSrv.setMarketFengKong(account);
+}
+
 //风控持仓保证金信息 接收
 export const getMarketFengKong = (store, str) => {
-	str = str.substring(0, str.length - 1);
-	var arrData = str.split(",");
+	let cleanStr = str.substring(0, str.length - 1);
+	let arrData = cleanStr.split(",");
 	if(arrData.length == 0) {
 		return;
 	}
-	var data = {};
-	for(var j = 0; j < arrData.length; j++) {
-		var rowArr = arrData[j].split("|");
-		var rowObj = {};
-		//for(var i = 0;i<rowArr.length;i++){
+
+	//	var data = {};
+	//	for(var j = 0; j < arrData.length; j++) {
+	//		var rowArr = arrData[j].split("|");
+	//		var rowObj = {};
+	//		//for(var i = 0;i<rowArr.length;i++){
+	//		//合约代码|风控规则开始时间|风控规则结束时间|持仓保证金|开仓保证金
+	//		rowObj.code = rowArr[0]; //合约代码
+	//		rowObj.start = rowArr[1]; //start
+	//		rowObj.end = rowArr[2]; //end
+	//		rowObj.holdCash = parseFloat(rowArr[3]); //持仓保证金
+	//		rowObj.openCash = parseFloat(rowArr[4]); //开仓保证金
+	//		//}
+	//		data[rowObj.code] = rowObj;
+	//	}
+
+	let data = [];
+	for(let j = 0; j < arrData.length; j++) {
+		let rowArr = arrData[j].split("|");
+		let rowObj = {};
 		//合约代码|风控规则开始时间|风控规则结束时间|持仓保证金|开仓保证金
 		rowObj.code = rowArr[0]; //合约代码
 		rowObj.start = rowArr[1]; //start
 		rowObj.end = rowArr[2]; //end
 		rowObj.holdCash = parseFloat(rowArr[3]); //持仓保证金
 		rowObj.openCash = parseFloat(rowArr[4]); //开仓保证金
-		//}
-		data[rowObj.code] = rowObj;
+
+		//		data[rowObj.code] = rowObj;
+		data.push(rowObj);
 	}
-	store.dispatch(Types.fengkongInfo, data);
+
+	data.sort(function(a, b) {
+		if(b.code == a.code) {
+			return a.start > b.start;
+		}
+		return b.code < a.code ? 1 : -1;
+	});
+
+	let tradeType = [];
+	for(let item in data) {
+		if(tradeType[data[item].code]) {
+			tradeType[data[item].code].push(data[item]);
+		} else {
+			let timeList = [];
+			timeList.push(data[item]);
+			tradeType[data[item].code] = timeList;
+		}
+	}
+	let fengKongInfo = {};
+	for(let item in tradeType) {
+		for(let timeItem = 0; timeItem < tradeType[item].length; timeItem++) {
+			let nowTime = new Date().toLocaleTimeString();
+			let startTime = tradeType[item][timeItem].start;
+			let endTime = tradeType[item][timeItem].end;
+
+			if((startTime == '00:00:01' && endTime == '00:00:00') || (nowTime > startTime && endTime > nowTime)) {
+				if(fengKongInfo[tradeType[item][timeItem].code]) {
+					let endNum = parseInt(fengKongInfo[tradeType[item][timeItem].code].end.replace(/:/g, ''));
+					let startNum = parseInt(fengKongInfo[tradeType[item][timeItem].code].start.replace(/:/g, ''));
+					let gap = endNum - startNum;
+					let newGap = parseInt(endTime.replace(/:/g, '')) - parseInt(startTime.replace(/:/g, ''));
+					if(gap < 0 || (newGap < gap && newGap > 0)) {
+						fengKongInfo[tradeType[item][timeItem].code] = tradeType[item][timeItem];
+					}
+				} else {
+					fengKongInfo[tradeType[item][timeItem].code] = tradeType[item][timeItem];
+				}
+			}
+
+		}
+	}
+	store.dispatch(Types.fengkongInfo, fengKongInfo);
 };
 
 //账户资金请求
