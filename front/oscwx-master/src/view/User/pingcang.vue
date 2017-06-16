@@ -4,7 +4,7 @@
 			<x-number id="pcNum" title="平仓手数" :min=1 :max="parseInt(myHold[index].holdNum)" :value="parseInt(myHold[index].holdNum)"></x-number>
 		</group>
 		<div class="pcoper">
-			<x-button type="primary" @click="sure">确定平仓</x-button>
+			<x-button :disabled="isClick" type="primary" @click="sure">确定平仓</x-button>
 			<x-button type="default" @click="cancel">取消操作</x-button>
 		</div>
 		<loading :show="loadShow" text="">
@@ -64,6 +64,7 @@
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
+				isClick: false,
 				isAlter: false
 			}
 		},
@@ -80,6 +81,7 @@
 					this.start = false;
 					this.time = 30;
 					this.loadShow = false;
+//					this.isClick = false;
 					this.isAlter = true;
 					if(this.pcState.state == "00") {
 						this.alterContent = '';
@@ -125,6 +127,7 @@
 					hms: hms,
 					id: id
 				});
+				this.isClick = true;
 				this.loadShow = true;
 				this.start = true;
 				this.time = 30;

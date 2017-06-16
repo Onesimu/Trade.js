@@ -126,11 +126,11 @@
 		methods: {
 			clickBtn() {
 				this.isClick = true;
-				var _this = this;
-				clearTimeout(window.orderClickTime);
-				window.orderClickTime = setTimeout(function() {
-					_this.isClick = false;
-				}, 1500);
+//				var _this = this;
+//				clearTimeout(window.orderClickTime);
+//				window.orderClickTime = setTimeout(function() {
+//					_this.isClick = false;
+//				}, 1500);
 				if(this.curSelect == "point") {
 					if(this.type == 1) {
 						if(this.winPrice <= this.newPrice && this.isWin) {
@@ -279,6 +279,7 @@
 					this.start = false;
 					this.time = 30;
 					this.loadShow = false;
+//					this.isClick = false;
 					this.isAlter = true;
 					if(this.openOrder.state == "00") {
 						this.alterContent = '';

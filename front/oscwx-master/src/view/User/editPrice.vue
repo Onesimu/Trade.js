@@ -6,7 +6,7 @@
 			<x-number id="winInput" title="触发止盈" :width="120" :value.sync="winPrice" :step="minUnit"></x-number>
 		</group>
 		<div class="pcoper">
-			<x-button type="primary" @click="sure">确定</x-button>
+			<x-button :disabled="isClick" type="primary" @click="sure">确定</x-button>
 			<x-button type="default" @click="cancel">取消</x-button>
 		</div>
 		<alert :show.sync="errPrice" title="提示" button-text="确定">
@@ -19,6 +19,11 @@
 		<alert :show.sync="winLossState.isShow" title="提示" button-text="确定" @on-hide="onHide">
 			<div style="text-align: center;">
 				<p>{{winLossState.state=="00"?'操作成功':'操作失败'}}</p>
+			</div>
+		</alert>
+		<alert :show.sync="isAlter" title="提示" button-text="确定">
+			<div style="text-align: center;">
+				{{{alterContent}}}
 			</div>
 		</alert>
 	</div>
@@ -66,6 +71,7 @@
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
+				isClick: false,
 				isAlter: false
 			}
 		},
@@ -182,7 +188,7 @@
 				}
 				var self = this;
 				window.clearTimeout(this.timeHandle);
-				if(this.time == 0) {
+				if(this.time == -1) {
 					this.time = 30;
 				}
 				this.timeHandle = window.setTimeout(function() {
@@ -206,6 +212,7 @@
 					this.start = false;
 					this.time = 30;
 					this.loadShow = false;
+					//					this.isClick = false;
 					this.isAlter = true;
 					if(this.winLossState.state == "00") {
 						this.alterContent = '';
