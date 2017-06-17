@@ -4,7 +4,23 @@
 			<x-number id="pcNum" title="平仓手数" :min=1 :max="parseInt(myHold[index].holdNum)" :value="parseInt(myHold[index].holdNum)"></x-number>
 		</group>
 		<div class="pcoper">
+<<<<<<< HEAD
 			<x-button type="primary" @click="sure">确定平仓</x-button>
+			<x-button type="default" @click="cancel">取消操作</x-button>
+		</div>
+		<loading :show="loadShow" text="">
+			<p>请求处理中,请稍等......</p>
+			<p>{{daojishi}}s</p>
+		</loading>
+		<alert :show.sync="pcState.isShow" :title="pcState.msg" button-text="确定" @on-hide="onHide">
+			<div style="text-align:center;">
+				<p>合约代码:{{pcState.code}}</p>
+				<p>平仓数量:{{pcState.num}}</p>
+				<p>成交价格:{{pcState.price}}</p>
+				<p>手续费:{{pcState.poundage}}</p>
+				<p>盈亏:{{pcState.winLoss}}</p>
+=======
+			<x-button :disabled="isClick" type="primary" @click="sure">确定平仓</x-button>
 			<x-button type="default" @click="cancel">取消操作</x-button>
 		</div>
 		<loading :show="loadShow" text="">
@@ -20,6 +36,12 @@
 				<p>盈亏:{{pcState.winLoss}}</p>
 			</div>
 		</alert>
+		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
+			<div style="text-align: center;">
+				{{{alterContent}}}
+>>>>>>> refs/heads/Trade-Only
+			</div>
+		</alert>
 	</div>
 </template>
 <style lang="less">
@@ -30,7 +52,11 @@
 	#pingcang .vux-number-selector {
 		height: 26px;
 		font-size: 25px;
+<<<<<<< HEAD
 		color: #268bf2;
+=======
+		/*color: #268bf2;*/
+>>>>>>> refs/heads/Trade-Only
 	}
 	
 	#pingcang .vux-number-input {
@@ -64,6 +90,7 @@
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
+<<<<<<< HEAD
 				isAlter: false
 			}
 		},
@@ -125,6 +152,76 @@
 					hms: hms,
 					id: id
 				});
+=======
+				isClick: false,
+				isAlter: false,
+				alterContent: '网络超时'
+			}
+		},
+		components: {
+			Group,
+			XNumber,
+			XButton,
+			loading,
+			Alert
+		},
+		watch: {
+			'pcState': {
+				handler: function(val, oldVal) {
+					this.start = false;
+					this.time = 30;
+					this.loadShow = false;
+					//					this.isClick = false;
+					//					this.isAlter = true;
+					if(this.pcState.state == "00") {
+						this.alterContent = '';
+					} else {
+						this.alterContent = '';
+					}
+				},
+				deep: true
+			}
+		},
+		computed: {
+			daojishi() {
+				if(this.loadShow == false) {
+					return;
+				}
+				var self = this;
+				window.clearTimeout(this.timeHandle);
+				if(this.time == -1) {
+					//					this.time = 30;
+					this.loadShow = false;
+					this.isAlter = true;
+					return;
+				}
+				this.timeHandle = window.setTimeout(function() {
+					self.time--;
+				}, 1000);
+				return this.time;
+			}
+		},
+		methods: {
+			sure() {
+				var myDate = new Date();
+				var ymd = "" + myDate.getFullYear() + (myDate.getMonth() + 1) + myDate.getDate();
+				var hms = "" + myDate.getHours() + myDate.getMinutes() + myDate.getSeconds();
+				var temp = this.myHold[this.index];
+				var id = temp.id;
+				var code = temp.tradName;
+				var dir = 0 - (parseInt(temp.direction));
+				var num = $("#pcNum .vux-number-input").val();
+				this.setPingCang({
+					account: this.account,
+					code: code,
+					dir: dir,
+					num: num,
+					ymd: ymd,
+					hms: hms,
+					id: id
+				});
+				this.isClick = true;
+>>>>>>> refs/heads/Trade-Only
 				this.loadShow = true;
 				this.start = true;
 				this.time = 30;

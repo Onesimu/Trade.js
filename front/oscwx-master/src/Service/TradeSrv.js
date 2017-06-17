@@ -69,7 +69,8 @@ export class TradeSrv {
 			if(typeNum = '01') {
 				getLoginInfo(this.store, {
 					state: arr[33],
-					nick: arr[43]
+					nick: arr[43],
+					msg: arr[34]
 				});
 			}
 		});

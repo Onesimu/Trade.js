@@ -155,8 +155,18 @@
 		},
 		ready() {
 			this.getNews();
+			//			clearTimeout(window.getNewTime);
+			//			window.getNewTime = setInterval(this.getNews, 1000 * 60);
+		},
+		events: {
+			"hide" () {
+				clearTimeout(window.getNewTime);
+			}
+		},
+		beforeRouteLeave(to, from, next) {
+			// 导航离开该组件的对应路由时调用
+			// 可以访问组件实例 `this`
 			clearTimeout(window.getNewTime);
-			window.getNewTime = setInterval(this.getNews, 1000 * 60);
 		}
 	}
 </script>

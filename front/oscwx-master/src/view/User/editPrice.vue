@@ -6,7 +6,22 @@
 			<x-number id="winInput" title="触发止盈" :width="120" :value.sync="winPrice" :step="minUnit"></x-number>
 		</group>
 		<div class="pcoper">
+<<<<<<< HEAD
 			<x-button type="primary" @click="sure">确定</x-button>
+			<x-button type="default" @click="cancel">取消</x-button>
+		</div>
+		<alert :show.sync="errPrice" title="提示" button-text="确定">
+			<div id="priceHint" style="text-align: center;"></div>
+		</alert>
+		<loading :show="loadShow" text="">
+			<p>请求处理中,请稍等......</p>
+			<p>{{daojishi}}s</p>
+		</loading>
+		<alert :show.sync="winLossState.isShow" title="提示" button-text="确定" @on-hide="onHide">
+			<div style="text-align: center;">
+				<p>{{winLossState.state=="00"?'操作成功':'操作失败'}}</p>
+=======
+			<x-button :disabled="isClick" type="primary" @click="sure">确定</x-button>
 			<x-button type="default" @click="cancel">取消</x-button>
 		</div>
 		<alert :show.sync="errPrice" title="提示" button-text="确定">
@@ -21,13 +36,23 @@
 				<p>{{winLossState.state=="00"?'操作成功':'操作失败'}}</p>
 			</div>
 		</alert>
+		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
+			<div style="text-align: center;">
+				{{{alterContent}}}
+>>>>>>> refs/heads/Trade-Only
+			</div>
+		</alert>
 	</div>
 </template>
 <style lang="less">
 	#winLoss .vux-number-selector {
 		height: 26px;
 		font-size: 25px;
+<<<<<<< HEAD
 		color: #268bf2;
+=======
+		/*	color: #268bf2;*/
+>>>>>>> refs/heads/Trade-Only
 	}
 	
 	#winLoss .vux-number-input {
@@ -66,6 +91,7 @@
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
+<<<<<<< HEAD
 				isAlter: false
 			}
 		},
@@ -207,6 +233,155 @@
 					this.time = 30;
 					this.loadShow = false;
 					this.isAlter = true;
+=======
+				isClick: false,
+				isAlter: false,
+				alterContent: '网络超时'
+			}
+		},
+		ready() {
+			var key = this.myHold[this.index].tradName;
+			if(this.hotContract[key].minUnit != 0) {
+				this.minUnit = this.hotContract[key].minUnit;
+			}
+		},
+		methods: {
+			sure() {
+				if(this.price == "") {
+					return;
+				}
+				var dir = this.myHold[this.index].direction;
+				var winPrice = $("#winInput .vux-number-input").val();
+				var lossPrice = $("#lossInput .vux-number-input").val();
+				if(dir == 1) {
+					if(parseFloat(winPrice) != 0 && winPrice <= this.newPrice) {
+						$("#priceHint").html("止盈价必须大于最新价");
+						this.errPrice = true;
+						return;
+					} else if(parseFloat(lossPrice) != 0 && lossPrice >= this.newPrice) {
+						$("#priceHint").html("止损价必须小于最新价");
+						this.errPrice = true;
+						return;
+					}
+				} else {
+					if(parseFloat(winPrice) != 0 && winPrice >= this.newPrice) {
+						$("#priceHint").html("止盈价必须小于最新价");
+						this.errPrice = true;
+						return;
+					} else if(parseFloat(lossPrice) != 0 && lossPrice <= this.newPrice) {
+						$("#priceHint").html("止损价必须大于最新价");
+						this.errPrice = true;
+						return;
+					}
+				}
+				if(winPrice == this.winPrice && lossPrice == this.lossPrice) {
+					this.cancel();
+					return;
+				}
+				var myDate = new Date();
+				var ymd = "" + myDate.getFullYear() + (myDate.getMonth() + 1) + myDate.getDate();
+				var hms = "" + myDate.getHours() + myDate.getMinutes() + myDate.getSeconds();
+				var temp = this.myHold[this.index];
+				var id = temp.id;
+				var code = temp.tradName;
+				this.setWinLoss({
+					account: this.account,
+					code: code,
+					winPri: winPrice,
+					lossPri: lossPrice,
+					ymd: ymd,
+					hms: hms,
+					id: id,
+				});
+				this.loadShow = true;
+				this.start = true;
+				this.time = 30;
+			},
+			cancel() {
+				window.location.hash = "/myHold/" + this.index;
+			},
+			onHide() {
+				this.cancel();
+			}
+		},
+		computed: {
+			newPrice() {
+				var key = this.myHold[this.index].tradName;
+				if(this.hotContract[key].newPrice == "none") {
+					return "--";
+				}
+				return this.hotContract[key].newPrice;
+			},
+			winTitle() {
+				var dir = this.myHold[this.index].direction;
+				var str = "";
+				if(dir == 1) {
+					str = "止盈价必须大于最新价";
+				} else {
+					str = "止盈价必须小于最新价";
+				}
+				return str;
+			},
+			lossTitle() {
+				var dir = this.myHold[this.index].direction;
+				var str = "";
+				if(dir == 1) {
+					str = "止损价必须小于最新价";
+				} else {
+					str = "止损价必须大于最新价";
+				}
+				return str;
+			},
+			winPrice() {
+				var pri = this.myHold[this.index].highPrice;
+				if(pri == "0") {
+					return 0.00;
+				}
+				return pri;
+			},
+			lossPrice() {
+				var pri = this.myHold[this.index].lowPrice;
+				if(pri == "0") {
+					return 0.00;
+				}
+				return pri;
+			},
+			daojishi() {
+				if(this.loadShow == false) {
+					return;
+				}
+				var self = this;
+				window.clearTimeout(this.timeHandle);
+				if(this.time == -1) {
+					//					this.time = 30;
+					this.loadShow = false;
+					this.isAlter = true;
+					return;
+				}
+				this.timeHandle = window.setTimeout(function() {
+					self.time--;
+				}, 1000);
+				return this.time;
+			}
+		},
+		components: {
+			Group,
+			XButton,
+			XInput,
+			Alert,
+			Cell,
+			xNumber,
+			loading
+		},
+		watch: {
+			'winLossState': {
+				handler: function(val, oldVal) {
+					this.start = false;
+					this.time = 30;
+					this.loadShow = false;
+					//					this.isClick = false;
+					//					this.isAlter = true;
+>>>>>>> refs/heads/Trade-Only
 					if(this.winLossState.state == "00") {
 						this.alterContent = '';
 					} else {

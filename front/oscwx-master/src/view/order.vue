@@ -30,6 +30,14 @@
 			<alert :show.sync="errPrice" title="提示" button-text="确定">
 				<div id="orderHint" style="text-align: center;"></div>
 			</alert>
+<<<<<<< HEAD
+=======
+			<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
+				<div style="text-align: center;">
+					{{{alterContent}}}
+				</div>
+			</alert>
+>>>>>>> refs/heads/Trade-Only
 		</template>
 	</div>
 </template>
@@ -46,7 +54,11 @@
 	#order .vux-number-selector {
 		height: 26px;
 		font-size: 25px;
+<<<<<<< HEAD
 		color: #268bf2;
+=======
+		/*	color: #268bf2;*/
+>>>>>>> refs/heads/Trade-Only
 	}
 	
 	#order .vux-number-input {
@@ -98,6 +110,7 @@
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
+<<<<<<< HEAD
 				isAlter: false
 			}
 		},
@@ -131,6 +144,42 @@
 				window.orderClickTime = setTimeout(function() {
 					_this.isClick = false;
 				}, 1500);
+=======
+				isAlter: false,
+				alterContent: '网络超时'
+			}
+		},
+		vuex: {
+			getters: {
+				hotData: (state) => state.hotContract,
+				account: (state) => state.userInfo.account,
+				openOrder: (state) => state.openState
+			},
+			actions: {
+				setOpenOrder
+			}
+		},
+		components: {
+			Group,
+			Cell,
+			xNumber,
+			xInput,
+			Radio,
+			xButton,
+			Alert,
+			Switch,
+			Selector,
+			loading
+		},
+		methods: {
+			clickBtn() {
+				this.isClick = true;
+				//				var _this = this;
+				//				clearTimeout(window.orderClickTime);
+				//				window.orderClickTime = setTimeout(function() {
+				//					_this.isClick = false;
+				//				}, 1500);
+>>>>>>> refs/heads/Trade-Only
 				if(this.curSelect == "point") {
 					if(this.type == 1) {
 						if(this.winPrice <= this.newPrice && this.isWin) {
@@ -233,6 +282,7 @@
 				}
 				var self = this;
 				window.clearTimeout(this.timeHandle);
+<<<<<<< HEAD
 				if(this.time == 0) {
 					this.time = 30;
 				}
@@ -280,6 +330,59 @@
 					this.time = 30;
 					this.loadShow = false;
 					this.isAlter = true;
+=======
+				if(this.time == -1) {
+					//					this.time = 30;
+					this.loadShow = false;
+					this.isAlter = true;
+					return;
+				}
+				this.timeHandle = window.setTimeout(function() {
+					self.time--;
+				}, 1000);
+				return this.time;
+			},
+			radioData() {
+				//                if(this.type == 1){ //买多
+				//                    //止盈点差 = 持仓保证金 * 倍数 * 2 / （第5个字段*第6个字段）
+				//                    //止损点差 = 持仓保证金 * 倍数 / （第5个字段*第6个字段）
+				//                }else{
+				//                    //止盈点差 = 持仓保证金 * 倍数 * 2 / （第5个字段*第6个字段）
+				//                }
+				let curData = this.hotData[this.key],
+					// d =    curData.holdCash / (curData.minUnit * curData.oneCost);
+					d = curData.holdCash;
+				let curs = {
+					CNY: '人民币',
+					USD: '美元',
+					EUR: '欧元',
+					HKD: '港币'
+				};
+				let cur = curs[curData.cur];
+				return [{
+						key: "0.5",
+						value: "止损" + d * 0.5 + cur + ",止盈" + d * 0.5 * 2 + cur
+					},
+					{
+						key: "1",
+						value: "止损" + d * 1 + cur + ",止盈" + d * 1 * 2 + cur
+					},
+					{
+						key: "2",
+						value: "止损" + d * 2 + cur + ",止盈" + d * 2 * 2 + cur
+					}
+				];
+			}
+		},
+		watch: {
+			'openOrder': {
+				handler: function(val, oldVal) {
+					this.start = false;
+					this.time = 30;
+					this.loadShow = false;
+					//					this.isClick = false;
+					//					this.isAlter = true;
+>>>>>>> refs/heads/Trade-Only
 					if(this.openOrder.state == "00") {
 						this.alterContent = '';
 					} else {
