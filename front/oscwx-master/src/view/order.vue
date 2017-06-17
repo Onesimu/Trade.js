@@ -30,6 +30,11 @@
 			<alert :show.sync="errPrice" title="提示" button-text="确定">
 				<div id="orderHint" style="text-align: center;"></div>
 			</alert>
+			<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
+				<div style="text-align: center;">
+					{{{alterContent}}}
+				</div>
+			</alert>
 		</template>
 	</div>
 </template>
@@ -98,7 +103,8 @@
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
-				isAlter: false
+				isAlter: false,
+				alterContent: '网络超时'
 			}
 		},
 		vuex: {
@@ -126,11 +132,11 @@
 		methods: {
 			clickBtn() {
 				this.isClick = true;
-//				var _this = this;
-//				clearTimeout(window.orderClickTime);
-//				window.orderClickTime = setTimeout(function() {
-//					_this.isClick = false;
-//				}, 1500);
+				//				var _this = this;
+				//				clearTimeout(window.orderClickTime);
+				//				window.orderClickTime = setTimeout(function() {
+				//					_this.isClick = false;
+				//				}, 1500);
 				if(this.curSelect == "point") {
 					if(this.type == 1) {
 						if(this.winPrice <= this.newPrice && this.isWin) {
@@ -233,8 +239,11 @@
 				}
 				var self = this;
 				window.clearTimeout(this.timeHandle);
-				if(this.time == 0) {
-					this.time = 30;
+				if(this.time == -1) {
+					//					this.time = 30;
+					this.loadShow == false;
+					this.isAlter = true;
+					return;
 				}
 				this.timeHandle = window.setTimeout(function() {
 					self.time--;
@@ -279,8 +288,8 @@
 					this.start = false;
 					this.time = 30;
 					this.loadShow = false;
-//					this.isClick = false;
-					this.isAlter = true;
+					//					this.isClick = false;
+					//					this.isAlter = true;
 					if(this.openOrder.state == "00") {
 						this.alterContent = '';
 					} else {

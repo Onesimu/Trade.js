@@ -12,7 +12,12 @@
 			<p>请求处理中,请稍等......</p>
 			<p>{{daojishi}}s</p>
 		</loading>
-		<toast :show.sync="isAlter" type="text">{{toastTxt}}</toast>
+		<toast :show.sync="isShow" type="text">{{toastTxt}}</toast>
+		<alert :show.sync="isAlter" title="提示" button-text="确定">
+			<div style="text-align: center;">
+				{{{alterContent}}}
+			</div>
+		</alert>
 	</div>
 </template>
 <style lang="less">
@@ -58,7 +63,7 @@
 				timeHandle: null,
 				time: 30,
 				isAlter: false,
-				alterContent: ""
+				alterContent: "网络超时"
 			}
 		},
 		ready() {
@@ -75,7 +80,8 @@
 					return;
 				}
 				this.LoginState({
-					isDisabledLoginBtn: true
+					isDisabledLoginBtn: true,
+					isShowToast: false
 				});
 				this.LoginEvent({
 					account: this.account,
@@ -84,7 +90,7 @@
 				this.loadShow = true;
 				this.start = true;
 				this.time = 30;
-				this.isAlter = false;
+				//				this.isAlter = false;
 			},
 			reset() {
 				window.location.hash = "reset";
@@ -96,14 +102,14 @@
 					this.start = false;
 					this.time = 0;
 					this.loadShow = false;
-					this.isAlter = this._isShow;
-					if(this.toastTxt != "") {
-						this.alterContent = this.toastTxt;
-					} else {
-						this.alterContent = this.toastTxt;
-					}
+					//					this.isAlter = this._isShow;
+					//					if(this.toastTxt != "") {
+					//						this.alterContent = this.toastTxt;
+					//					} else {
+					//						this.alterContent = this.toastTxt;
+					//					}
 				},
-				deep: true
+				//				deep: true
 			}
 		},
 		events: {
@@ -129,7 +135,7 @@
 				if(this.time == -1) {
 					//					this.time = 30;
 					this.loadShow == false;
-					this.isAlter = this._isShow;
+					this.isAlter = true;
 					return;
 				}
 				this.timeHandle = window.setTimeout(function() {

@@ -21,7 +21,7 @@
 				<p>{{winLossState.state=="00"?'操作成功':'操作失败'}}</p>
 			</div>
 		</alert>
-		<alert :show.sync="isAlter" title="提示" button-text="确定">
+		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
 			<div style="text-align: center;">
 				{{{alterContent}}}
 			</div>
@@ -72,7 +72,8 @@
 				timeHandle: null,
 				time: 30,
 				isClick: false,
-				isAlter: false
+				isAlter: false,
+				alterContent: '网络超时'
 			}
 		},
 		ready() {
@@ -189,7 +190,10 @@
 				var self = this;
 				window.clearTimeout(this.timeHandle);
 				if(this.time == -1) {
-					this.time = 30;
+					//					this.time = 30;
+					this.loadShow == false;
+					this.isAlter = true;
+					return;
 				}
 				this.timeHandle = window.setTimeout(function() {
 					self.time--;
@@ -213,7 +217,7 @@
 					this.time = 30;
 					this.loadShow = false;
 					//					this.isClick = false;
-					this.isAlter = true;
+					//					this.isAlter = true;
 					if(this.winLossState.state == "00") {
 						this.alterContent = '';
 					} else {

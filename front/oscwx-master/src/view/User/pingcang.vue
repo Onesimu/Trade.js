@@ -20,6 +20,11 @@
 				<p>盈亏:{{pcState.winLoss}}</p>
 			</div>
 		</alert>
+		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
+			<div style="text-align: center;">
+				{{{alterContent}}}
+			</div>
+		</alert>
 	</div>
 </template>
 <style lang="less">
@@ -65,7 +70,8 @@
 				timeHandle: null,
 				time: 30,
 				isClick: false,
-				isAlter: false
+				isAlter: false,
+				alterContent: '网络超时'
 			}
 		},
 		components: {
@@ -81,8 +87,8 @@
 					this.start = false;
 					this.time = 30;
 					this.loadShow = false;
-//					this.isClick = false;
-					this.isAlter = true;
+					//					this.isClick = false;
+					//					this.isAlter = true;
 					if(this.pcState.state == "00") {
 						this.alterContent = '';
 					} else {
@@ -99,8 +105,11 @@
 				}
 				var self = this;
 				window.clearTimeout(this.timeHandle);
-				if(this.time == 0) {
-					this.time = 30;
+				if(this.time == -1) {
+					//					this.time = 30;
+					this.loadShow == false;
+					this.isAlter = true;
+					return;
 				}
 				this.timeHandle = window.setTimeout(function() {
 					self.time--;
