@@ -262,71 +262,34 @@ export const getMarketFengKong = (store, str) => {
 			let startTime = tradeType[item][timeItem].start;
 			let endTime = tradeType[item][timeItem].end;
 
-			if(startTime > endTime) {
-				if(nowTime > startTime) {
-					if(fengKongInfo[tradeType[item][timeItem].code + '~']) {
-						let endNum = Number(fengKongInfo[tradeType[item][timeItem].code + '~'].end.replace(/:/g, ''));
-						let startNum = Number(fengKongInfo[tradeType[item][timeItem].code + '~'].start.replace(/:/g, ''));
-						if(startNum > endNum) {
-							let gap = startNum - endNum;
-							let newGap = Number(startTime.replace(/:/g, '')) - Number(endTime.replace(/:/g, ''));
-							if(newGap > gap) {
-								fengKongInfo[tradeType[item][timeItem].code + '~'] = tradeType[item][timeItem];
-							}
-						}
-					} else {
-						fengKongInfo[tradeType[item][timeItem].code + '~'] = tradeType[item][timeItem];
+			if((startTime > endTime && (nowTime >= startTime || nowTime <= endTime)) || ((startTime < endTime) && (nowTime > startTime && endTime > nowTime))) {
+
+				if(fengKongInfo[tradeType[item][timeItem].code]) {
+
+					let openCashMax = fengKongInfo[tradeType[item][timeItem].code].openCash;
+					let openCashTmp = tradeType[item][timeItem].openCash;
+					if(openCashMax < openCashTmp) {
+						fengKongInfo[tradeType[item][timeItem].code].openCash = openCashTmp;
+						fengKongInfo[tradeType[item][timeItem].code].openCashTime = tradeType[item][timeItem].start + '-' + tradeType[item][timeItem].end;
 					}
-				}
-			} else if(startTime < endTime) {
-				if(nowTime > startTime && endTime > nowTime) {
-					if(fengKongInfo[tradeType[item][timeItem].code]) {
-						let endNum = Number(fengKongInfo[tradeType[item][timeItem].code].end.replace(/:/g, ''));
-						let startNum = Number(fengKongInfo[tradeType[item][timeItem].code].start.replace(/:/g, ''));
-						if(endNum > startNum) {
-							let gap = endNum - startNum;
-							let newGap = Number(endTime.replace(/:/g, '')) - Number(startTime.replace(/:/g, ''));
-							if(newGap < gap) {
-								fengKongInfo[tradeType[item][timeItem].code] = tradeType[item][timeItem];
-							}
-						}
-					} else {
-						fengKongInfo[tradeType[item][timeItem].code] = tradeType[item][timeItem];
+
+					let holdCashMax = fengKongInfo[tradeType[item][timeItem].code].holdCash;
+					let holdCashTmp = tradeType[item][timeItem].holdCash;
+					if(holdCashMax < holdCashTmp) {
+						fengKongInfo[tradeType[item][timeItem].code].holdCash = holdCashTmp;
+						fengKongInfo[tradeType[item][timeItem].code].holdCashTime = tradeType[item][timeItem].start + '-' + tradeType[item][timeItem].end;
 					}
+
+				} else {
+					fengKongInfo[tradeType[item][timeItem].code] = tradeType[item][timeItem];
 				}
+
 			}
+
 		}
 	}
 
-	let currentFengKongInfo = {};
-	for(let item in fengKongInfo) {
-		if(item.endsWith('~') && !fengKongInfo[item.replace('~', '')]) {
-			let code = item.replace('~', '');
-			currentFengKongInfo[code] = fengKongInfo[item];
-		} else if(!item.endsWith('~') && !fengKongInfo[item + '~']) {
-			currentFengKongInfo[item] = fengKongInfo[item];
-		} else if(!item.endsWith('~') && fengKongInfo[item + '~']) {
-			currentFengKongInfo[item] = {};
-			if(fengKongInfo[item].openCash > fengKongInfo[item + '~'].openCash) {
-				currentFengKongInfo[item].openCash = fengKongInfo[item].openCash;
-				currentFengKongInfo[item].openCashTime = fengKongInfo[item].start + '-' + fengKongInfo[item].end;
-			} else {
-				currentFengKongInfo[item].openCash = fengKongInfo[item + '~'].openCash;
-				currentFengKongInfo[item].openCashTime = fengKongInfo[item + '~'].start + '-' + fengKongInfo[item + '~'].end;
-			}
-			if(fengKongInfo[item].holdCash > fengKongInfo[item + '~'].holdCash) {
-				currentFengKongInfo[item].holdCash = fengKongInfo[item].holdCash;
-				currentFengKongInfo[item].holdCashTime = fengKongInfo[item].start + '-' + fengKongInfo[item].end;
-			} else {
-				currentFengKongInfo[item].holdCash = fengKongInfo[item + '~'].holdCash;
-				currentFengKongInfo[item].holdCashTime = fengKongInfo[item + '~'].start + '-' + fengKongInfo[item + '~'].end;
-			}
-			//             currentFengKongInfo[item].openCash = Math.max(fengKongInfo[item].openCash,fengKongInfo[item+'~'].openCash);
-			//             currentFengKongInfo[item].holdCash = Math.max(fengKongInfo[item].holdCash,fengKongInfo[item+'~'].holdCash);
-		}
-	}
-
-	store.dispatch(Types.fengkongInfo, currentFengKongInfo);
+	store.dispatch(Types.fengkongInfo, fengKongInfo);
 };
 
 //账户资金请求

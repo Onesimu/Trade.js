@@ -241,7 +241,7 @@
 				window.clearTimeout(this.timeHandle);
 				if(this.time == -1) {
 					//					this.time = 30;
-					this.loadShow == false;
+					this.loadShow = false;
 					this.isAlter = true;
 					return;
 				}
