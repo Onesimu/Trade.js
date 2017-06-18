@@ -207,21 +207,6 @@ export const getMarketFengKong = (store, str) => {
 		return;
 	}
 
-	//	var data = {};
-	//	for(var j = 0; j < arrData.length; j++) {
-	//		var rowArr = arrData[j].split("|");
-	//		var rowObj = {};
-	//		//for(var i = 0;i<rowArr.length;i++){
-	//		//合约代码|风控规则开始时间|风控规则结束时间|持仓保证金|开仓保证金
-	//		rowObj.code = rowArr[0]; //合约代码
-	//		rowObj.start = rowArr[1]; //start
-	//		rowObj.end = rowArr[2]; //end
-	//		rowObj.holdCash = parseFloat(rowArr[3]); //持仓保证金
-	//		rowObj.openCash = parseFloat(rowArr[4]); //开仓保证金
-	//		//}
-	//		data[rowObj.code] = rowObj;
-	//	}
-
 	let data = [];
 	for(let j = 0; j < arrData.length; j++) {
 		let rowArr = arrData[j].split("|");
@@ -364,6 +349,7 @@ export const getTradingHistory = ({
 			data.push(rowObj);
 		}
 	}
+	data.sort((a, b) => a.time - b.time);
 	dispatch(Types.TradingHistory, data);
 }
 //请求入金流水
@@ -392,6 +378,7 @@ export const getMoneyInHistory = ({
 			data.push(rowObj);
 		}
 	}
+	data.sort((a, b) => a.time - b.time);
 	dispatch(Types.MoneyInHistory, data);
 }
 //请求客户持仓的数据
@@ -459,7 +446,9 @@ export const getOpenOrder = (state, obj) => {
 	openClick = false;
 	state.dispatch(Types.openOrder, obj);
 	//请求下持仓数据
-	setMyHold(state, Account);
+	if(obj.state === "00") {
+		setMyHold(state, Account);
+	}
 }
 //请求平仓的数据
 var pcId = "";
@@ -482,7 +471,9 @@ export const getPingCang = (state, obj) => {
 	obj.isShow = true;
 	state.dispatch(Types.pcOrder, obj);
 	//请求下持仓数据
-	setMyHold(state, Account);
+	if(obj.state === "00" && pcId == obj.id) {
+		setMyHold(state, Account);
+	}
 }
 //请求修改止盈
 export const setWinLoss = ({

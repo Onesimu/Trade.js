@@ -190,17 +190,17 @@
 		},
 		computed: {
 			getDate() {
-				//              var myDate = new Date();
-				//              var month = myDate.getMonth()+1;
-				//              var day  = myDate.getDate();
-				//              if(month < 10) {
-				//                  month = '0' + month.toString();
-				//              }
-				//              if(day < 10) {
-				//                  day = '0' + day.toString();
-				//              }
-				//              return myDate.getFullYear()+"-"+month+"-" + day;
-				return this.nowDate();
+				var myDate = new Date();
+				var month = myDate.getMonth() + 1;
+				var day = myDate.getDate();
+				if(month < 10) {
+					month = '0' + month.toString();
+				}
+				if(day < 10) {
+					day = '0' + day.toString();
+				}
+				return myDate.getFullYear() + "-" + month + "-" + day;
+				//				return this.nowDate();
 			},
 			endRes() {
 				return this.res;

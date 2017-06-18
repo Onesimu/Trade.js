@@ -106,15 +106,31 @@ export class TradeSrv {
 		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
-			var arr = data.split("/");
-			var typeNum = arr[0].substr(4);
-			if(typeNum = '03') {
-				this.myHoldStr += arr[5];
-				if(arr[17] == "END") {
-					getMyHold(this.store, this.myHoldStr, parseInt(arr[16]));
-					this.myHoldStr = "";
+
+			let msgs = data.split('~');
+			//			msgs.pop();
+			for(let i in msgs) {
+				let eachMsg = msgs[i].split('/');
+				let typeNum = eachMsg[0].substr(4);
+				if(typeNum == '03') {
+					this.myHoldStr += eachMsg[5];
+					if(eachMsg[17] == "END" || i == msgs.length - 1) {
+						getMyHold(this.store, this.myHoldStr, eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length);
+						this.myHoldStr = "";
+					}
 				}
 			}
+
+			//			var arr = data.split("/");
+			//			var typeNum = arr[0].substr(4);
+			//			if(typeNum = '03') {
+			//				this.myHoldStr += arr[5];
+			//				if(arr[17] == "END") {
+			//					getMyHold(this.store, this.myHoldStr, parseInt(arr[16]));
+			//					this.myHoldStr = "";
+			//				}
+			//			}
+
 		});
 	}
 	//开仓
@@ -269,15 +285,33 @@ export class TradeSrv {
 		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
-			var arr = data.split("/");
-			var typeNum = arr[0].substr(4);
-			if(typeNum = '05') {
-				this.TradingHistoryStr += arr[8];
-				if(arr[17] == "END") {
-					getTradingHistory(this.store, this.TradingHistoryStr, parseInt(arr[16]));
-					this.TradingHistoryStr = "";
+			let msgs = data.split('~');
+			//			msgs.pop();
+			for(let i in msgs) {
+				let eachMsg = msgs[i].split('/');
+				let typeNum = eachMsg[0].substr(4);
+				if(typeNum == '05') {
+					this.TradingHistoryStr += eachMsg[8];
+					if(eachMsg[17] == "END" || i == msgs.length - 1) {
+						getTradingHistory(this.store, this.TradingHistoryStr, eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length);
+						this.TradingHistoryStr = "";
+					}
 				}
 			}
+			//			if(i == msgs.length - 1) {
+			//				getTradingHistory(this.store, this.TradingHistoryStr, msgs.length);
+			//				this.TradingHistoryStr = "";
+			//			}
+
+			//			var arr = data.split("/");
+			//			var typeNum = arr[0].substr(4);
+			//			if(typeNum == '05') {
+			//				this.TradingHistoryStr += arr[8];
+			//				if(arr[17] == "END") {
+			//					getTradingHistory(this.store, this.TradingHistoryStr, parseInt(arr[16]));
+			//					this.TradingHistoryStr = "";
+			//				}
+			//			}
 		});
 	}
 	//请求入金流水
@@ -293,15 +327,29 @@ export class TradeSrv {
 		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
-			var arr = data.split("/");
-			var typeNum = arr[0].substr(4);
-			if(typeNum = '08') {
-				this.moneyInHistoryStr += arr[8];
-				if(arr[17] === 'END') {
-					getMoneyInHistory(this.store, this.moneyInHistoryStr, parseInt(arr[16]));
-					this.moneyInHistoryStr = '';
+			let msgs = data.split('~');
+			//			msgs.pop();
+			for(let i in msgs) {
+				let eachMsg = msgs[i].split('/');
+				let typeNum = eachMsg[0].substr(4);
+				if(typeNum == '08') {
+					this.moneyInHistoryStr += eachMsg[8];
+					if(eachMsg[17] == "END" || i == msgs.length - 1) {
+						getMoneyInHistory(this.store, this.moneyInHistoryStr, eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length);
+						this.moneyInHistoryStr = "";
+					}
 				}
 			}
+
+			//			var arr = data.split("/");
+			//			var typeNum = arr[0].substr(4);
+			//			if(typeNum = '08') {
+			//				this.moneyInHistoryStr += arr[8];
+			//				if(arr[17] === 'END') {
+			//					getMoneyInHistory(this.store, this.moneyInHistoryStr, parseInt(arr[16]));
+			//					this.moneyInHistoryStr = '';
+			//				}
+			//			}
 		});
 	}
 
