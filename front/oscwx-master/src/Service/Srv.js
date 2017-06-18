@@ -50,7 +50,7 @@ export class Srv {
 				//          if(evt.currentTarget.url.indexOf("8540") >= 0){
 				//              setUserState(_this.store,true);
 				//          }
-				this.repeat = 10,
+				this.repeat = 3,
 				this.url.indexOf("market") >= 0 && ((0, setMarketState)(_this.store, true),
 				_this.getMarketData(_this.store.state.userInfo.account)),
 				this.url.indexOf("data") >= 0 && (0, setUserState)(_this.store, true)

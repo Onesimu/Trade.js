@@ -35,6 +35,7 @@
 		<alert :show.sync="isAlert" title="提示" button-text="确定">
 			<p style="text-align:center;">查询时间的跨度不要超过30天</p>
 		</alert>
+		<loading-time :load-show="loadingShow"></loading-time>
 	</div>
 </template>
 <style lang="less">
@@ -118,14 +119,16 @@
 	import Cell from "vux/src/components/cell"
 	import xButton from "vux/src/components/x-button"
 	import datetime from "vux/src/components/datetime"
-	import Acc from "component/Accordion"
 	import Alert from "vux/src/components/alert"
+	import Acc from "component/Accordion"
+	import LoadingTime from "component/LoadingTime"
 	export default {
 		data() {
 			return {
 				start: 0,
 				end: 0,
-				isAlert: false
+				isAlert: false,
+				loadingShow: false
 			}
 		},
 		vuex: {
@@ -164,6 +167,7 @@
 				return parseInt(Math.abs(e - s) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
 			},
 			btnEvent() {
+				this.loadingShow = true;
 				var start = this.start;
 				var end = this.end;
 				start = start == 0 ? this.nowDate() : start;
@@ -212,7 +216,18 @@
 			xButton,
 			datetime,
 			Acc,
-			Alert
+			Alert,
+			LoadingTime
+		},
+		watch: {
+			'res': {
+				handler: function(val, oldVal) {
+					this.loadingShow = false;
+					//					this.isClick = false;
+					//					this.isAlter = true;
+				},
+				deep: true
+			}
 		}
 	}
 </script>
