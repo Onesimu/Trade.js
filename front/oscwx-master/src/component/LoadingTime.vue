@@ -78,11 +78,8 @@
 				window.location.hash = "/myHold/" + this.index;
 			},
 			onHide() {
-				var index = this.index;
-				if(this.pcState.state == "00") {
-					index = 0;
-				}
-				window.location.hash = "/myHold/" + index;
+				//				window.location.hash = "/myHold/" + index;
+				//				window.history.go(-1);
 			}
 		},
 		events: {

@@ -170,7 +170,6 @@
 				return parseInt(Math.abs(e - s) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
 			},
 			btnEvent() {
-				this.loadingShow = true;
 				var start = this.start;
 				var end = this.end;
 				start = start == 0 ? this.nowDate() : start;
@@ -179,6 +178,7 @@
 					this.isAlert = !this.isAlert;
 					return;
 				}
+				this.loadingShow = true;
 				this.setTradingHistory(this.account, start, end);
 			},
 			nowDate() {

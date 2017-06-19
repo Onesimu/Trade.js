@@ -33,7 +33,7 @@
 			</acc>
 		</component>
 		<alert :show.sync="isAlert" title="提示" button-text="确定">
-			<p style="text-align:center;">查询时间的跨度不要超过30天</p>
+			<p style="text-align:center;">{{alertMsg}}</p>
 		</alert>
 		<loading-time :load-show="loadingShow"></loading-time>
 	</div>
@@ -128,7 +128,8 @@
 				start: 0,
 				end: 0,
 				isAlert: false,
-				loadingShow: false
+				loadingShow: false,
+				alertMsg: '查询时间的跨度不要超过30天'
 			}
 		},
 		vuex: {
@@ -167,7 +168,6 @@
 				return parseInt(Math.abs(e - s) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
 			},
 			btnEvent() {
-				this.loadingShow = true;
 				var start = this.start;
 				var end = this.end;
 				start = start == 0 ? this.nowDate() : start;
@@ -176,6 +176,12 @@
 					this.isAlert = !this.isAlert;
 					return;
 				}
+				//				if(this.diff(end, start) > 5) {
+				//					this.alertMsg = '查询时间段较长时,部分数据可能显示不全'
+				//					this.isAlert = !this.isAlert;
+				//					//					return;
+				//				}
+				this.loadingShow = true;
 				this.setMoneyInHistory(this.account, start, end);
 			},
 			nowDate() {

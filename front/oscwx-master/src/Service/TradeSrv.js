@@ -112,7 +112,7 @@ export class TradeSrv {
 			for(let i in msgs) {
 				let eachMsg = msgs[i].split('/');
 				let typeNum = eachMsg[0].substr(4);
-				if(typeNum == '03') {
+				if(typeNum == '03' && eachMsg[33] == '00') {
 					this.myHoldStr += eachMsg[5];
 					if(eachMsg[17] == "END" || i == msgs.length - 1) {
 						getMyHold(this.store, this.myHoldStr, eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length);
@@ -290,7 +290,7 @@ export class TradeSrv {
 			for(let i in msgs) {
 				let eachMsg = msgs[i].split('/');
 				let typeNum = eachMsg[0].substr(4);
-				if(typeNum == '05') {
+				if(typeNum == '05' && eachMsg[33] == '00') {
 					this.TradingHistoryStr += eachMsg[8];
 					if(eachMsg[17] == "END" || i == msgs.length - 1) {
 						getTradingHistory(this.store, this.TradingHistoryStr, eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length);
@@ -332,7 +332,7 @@ export class TradeSrv {
 			for(let i in msgs) {
 				let eachMsg = msgs[i].split('/');
 				let typeNum = eachMsg[0].substr(4);
-				if(typeNum == '08') {
+				if(typeNum == '08' && eachMsg[33] == '00') {
 					this.moneyInHistoryStr += eachMsg[8];
 					if(eachMsg[17] == "END" || i == msgs.length - 1) {
 						getMoneyInHistory(this.store, this.moneyInHistoryStr, eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length);

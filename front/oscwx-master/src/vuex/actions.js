@@ -349,7 +349,7 @@ export const getTradingHistory = ({
 			data.push(rowObj);
 		}
 	}
-	data.sort((a, b) => a.time - b.time);
+	data.sort((a, b) => b.time -a.time);
 	dispatch(Types.TradingHistory, data);
 }
 //请求入金流水
@@ -378,7 +378,7 @@ export const getMoneyInHistory = ({
 			data.push(rowObj);
 		}
 	}
-	data.sort((a, b) => a.time - b.time);
+	data.sort((a, b) => b.time -a.time);
 	dispatch(Types.MoneyInHistory, data);
 }
 //请求客户持仓的数据

@@ -212,7 +212,8 @@
 				this.time = 30;
 			},
 			onHide() {
-				window.history.go(-1);
+				//				window.history.go(-1);
+				this.cancel();
 				//				v-link="{ name: 'tradInfo', params: { id: item.code,name:item.cn,cur:item.cur}}"
 			},
 			cancel() {
