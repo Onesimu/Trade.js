@@ -349,7 +349,7 @@ export const getTradingHistory = ({
 			data.push(rowObj);
 		}
 	}
-	data.sort((a, b) => b.time -a.time);
+	data.sort((a, b) => b.code -a.code);
 	dispatch(Types.TradingHistory, data);
 }
 //请求入金流水

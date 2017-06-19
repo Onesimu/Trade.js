@@ -65,7 +65,7 @@ function candle(markcode, minute) {
 								highcharts.redraw();
 							});
 						}
-					}, 1000 * 10);
+					}, 1000 * 60 * 5);
 				}
 			}
 		},
@@ -252,7 +252,7 @@ function tickChart(metcal_symbol) {
 							highcharts.series[0].setData(v_data, true);
 							highcharts.redraw();
 						});
-					}, 1000 * 30);
+					}, 1000 * 60 *5);
 				}
 			}
 		},

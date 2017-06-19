@@ -103,12 +103,14 @@ const mutations = {
 		state.hotContract = obj;
 	},
 	[Types.UpdateMark](state, obj) {
-		state.hotContract[obj.code].newPrice = parseFloat(obj.newPrice);
-		state.hotContract[obj.code].upDown = obj.upDown;
-		state.hotContract[obj.code].buyOnePri = obj.buyOnePri;
-		state.hotContract[obj.code].saleOnePri = obj.saleOnePri;
-		state.hotContract[obj.code].markePri = obj.markePri;
-		state.hotContract[obj.code].time = obj.time;
+		if(state.hotContract[obj.code]) {
+			state.hotContract[obj.code].newPrice = parseFloat(obj.newPrice);
+			state.hotContract[obj.code].upDown = obj.upDown;
+			state.hotContract[obj.code].buyOnePri = obj.buyOnePri;
+			state.hotContract[obj.code].saleOnePri = obj.saleOnePri;
+			state.hotContract[obj.code].markePri = obj.markePri;
+			state.hotContract[obj.code].time = obj.time;
+		}
 	},
 	[Types.LoginState](state, obj) {
 		obj.hasOwnProperty("isDisabledLoginBtn") && (state.loginState.isDisabledLoginBtn = obj.isDisabledLoginBtn);

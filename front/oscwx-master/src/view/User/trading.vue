@@ -145,8 +145,8 @@
 			}
 		},
 		ready() {
-			var date = this.nowDate();
-			this.getTrading(date, date);
+			let date = this.nowDate();
+			//			this.getTrading(date, date);
 		},
 		methods: {
 			getTrading(start, end) {
