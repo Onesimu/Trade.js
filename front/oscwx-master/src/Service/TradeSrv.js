@@ -365,11 +365,27 @@ export class TradeSrv {
 		$.post(getContextHost() + "/app/service/trade", {
 			val: str
 		}, (data) => {
-			var arr = data.split("/");
-			var typeNum = arr[0].substr(4);
-			if(typeNum = '10') {
-				getMarketFengKong(this.store, arr[9]);
+			let msgs = data.split('~');
+			let fengKongStr = '';
+			for(let i in msgs) {
+				let eachMsg = msgs[i].split('/');
+				let typeNum = eachMsg[0].substr(4);
+				if(typeNum == '10' && eachMsg[33] == '00') {
+					fengKongStr += eachMsg[9];
+					if(eachMsg[17] == "END" || i == msgs.length - 1) {
+						let num = eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length;
+						if(num > 0) {
+							getMarketFengKong(this.store, fengKongStr);
+						}
+					}
+				}
 			}
+
+			//			var arr = data.split("/");
+			//			var typeNum = arr[0].substr(4);
+			//			if(typeNum = '10') {
+			//				getMarketFengKong(this.store, arr[9]);
+			//			}
 		});
 	}
 
