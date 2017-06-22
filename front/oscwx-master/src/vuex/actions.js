@@ -243,7 +243,7 @@ export const getMarketFengKong = (store, str) => {
 	let fengKongInfo = {};
 	for(let item in tradeType) {
 		for(let timeItem = 0; timeItem < tradeType[item].length; timeItem++) {
-			let nowTime = new Date().toLocaleTimeString();
+			let nowTime = new Date().toTimeString().substring(0,8);
 			let startTime = tradeType[item][timeItem].start;
 			let endTime = tradeType[item][timeItem].end;
 

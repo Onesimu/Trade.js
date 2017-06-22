@@ -31,7 +31,7 @@
 						<span>{{item.price}}</span>
 						<span>{{item.poundage}}</span>
 						<span>{{item.state}}</span>
-						<span>{{item.time}}</span>
+						<span>{{localDate(item.time)}}</span>
 					</div>
 				</div>
 			</acc>
@@ -193,6 +193,9 @@
 				}
 				var res = myDate.getFullYear() + "" + month + "" + day;
 				return res;
+			},
+			localDate(str) {
+				return new Date(str.substr(0, 4), str.substr(4, 2), str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
 			}
 		},
 		computed: {

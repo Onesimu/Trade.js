@@ -28,7 +28,7 @@
 						<span>持仓编号</span>
 					</div>
 					<div class="secondRow">
-						<span style="padding-left: 15px;">{{item.time}}</span>
+						<span style="padding-left: 15px;">{{localDate(item.time)}}</span>
 						<span>{{item.id}}</span>
 					</div>
 					<div class="oper">
@@ -193,6 +193,11 @@
 			},
 			kong() {
 				return 2;
+			}
+		},
+		methods: {
+			localDate(str) {
+				return new Date(str.substr(0, 4), str.substr(4, 2), str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
 			}
 		},
 		route: {
