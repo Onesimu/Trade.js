@@ -168,9 +168,9 @@ export const getLoginInfo = (store, obj) => {
 			RshowRegist: false //注册显示
 		});
 		//用户登录后重置热门合约
-		//		martSrv.close();
-		//		LinkMarket(store);
-		//		store.dispatch(Types.clearHot, true);
+		//				martSrv.close();
+		//				LinkMarket(store);
+		//				store.dispatch(Types.clearHot, true);
 		//提示：缓存到本地
 		window.localStorage.account = Account;
 		window.localStorage.nick = obj.nick;
@@ -243,7 +243,7 @@ export const getMarketFengKong = (store, str) => {
 	let fengKongInfo = {};
 	for(let item in tradeType) {
 		for(let timeItem = 0; timeItem < tradeType[item].length; timeItem++) {
-			let nowTime = new Date().toTimeString().substring(0,8);
+			let nowTime = new Date().toTimeString().substring(0, 8);
 			let startTime = tradeType[item][timeItem].start;
 			let endTime = tradeType[item][timeItem].end;
 
@@ -349,7 +349,7 @@ export const getTradingHistory = ({
 			data.push(rowObj);
 		}
 	}
-	data.sort((a, b) => b.code -a.code);
+	data.sort((a, b) => b.code - a.code);
 	dispatch(Types.TradingHistory, data);
 }
 //请求入金流水
@@ -378,7 +378,7 @@ export const getMoneyInHistory = ({
 			data.push(rowObj);
 		}
 	}
-	data.sort((a, b) => b.time -a.time);
+	data.sort((a, b) => b.time - a.time);
 	dispatch(Types.MoneyInHistory, data);
 }
 //请求客户持仓的数据
