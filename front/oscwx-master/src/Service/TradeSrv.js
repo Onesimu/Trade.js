@@ -449,7 +449,7 @@ export class TradeSrv {
 			var arr = data.split("/");
 			var typeNum = arr[0].substr(4);
 			if(typeNum = '13') {
-				getRegistUser(_this.store, {
+				getRegistUser(this.store, {
 					'newAccount': arr[55],
 					'status': arr[33],
 					'msg': arr[34]

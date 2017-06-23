@@ -37,7 +37,7 @@
 			</acc>
 		</component>
 		<alert :show.sync="isAlert" title="提示" button-text="确定">
-			<p style="text-align:center;">查询时间的跨度不要超过30天</p>
+			<p style="text-align:center;">{{alertMsg}}</p>
 		</alert>
 		<loading-time :load-show="loadingShow"></loading-time>
 	</div>
@@ -132,7 +132,8 @@
 				start: 0,
 				end: 0,
 				isAlert: false,
-				loadingShow: false
+				loadingShow: false,
+				alertMsg: '查询时间的跨度不要超过30天'
 			}
 		},
 		vuex: {
@@ -167,7 +168,8 @@
 			diff(end, start) {
 				var e = new Date(end.substr(0, 4), end.substr(4, 2), end.substr(6, 2));
 				var s = new Date(start.substr(0, 4), start.substr(4, 2), start.substr(6, 2));
-				return parseInt(Math.abs(e - s) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
+				//				return parseInt(Math.abs(e - s) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
+				return parseInt((e - s) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
 			},
 			btnEvent() {
 				var start = this.start;
@@ -178,6 +180,16 @@
 					this.isAlert = !this.isAlert;
 					return;
 				}
+				if(this.diff(end, start) < 0) {
+					this.alertMsg = '结束日期早于开始日期!'
+					this.isAlert = !this.isAlert;
+					return;
+				}
+				//				if(this.diff(end, start) > 5) {
+				//					this.alertMsg = '查询时间段较长时,部分数据可能显示不全'
+				//					this.isAlert = !this.isAlert;
+				//					return;
+				//				}
 				this.loadingShow = true;
 				this.setTradingHistory(this.account, start, end);
 			},
@@ -195,7 +207,7 @@
 				return res;
 			},
 			localDate(str) {
-				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2))-1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
+				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
 			}
 		},
 		computed: {
