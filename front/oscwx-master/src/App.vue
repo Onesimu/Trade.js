@@ -57,16 +57,17 @@
 				Bshow: (state) => state.header.Bshow, //底部tabber
 				loadingState: (state) => {
 					//return true;
-					return state.marketState && state.userState;
+					//					return state.marketState && state.userState;
+					return state.marketState;
 				},
 				loadingText: (state) => {
 					var text = [];
 					if(state.marketState == false) {
 						text.push("行情服务未链接,port:8850");
 					}
-					if(state.userState == false) {
-						text.push("交易服务未链接,port:8540");
-					}
+					//					if(state.userState == false) {
+					//						text.push("交易服务未链接,port:8540");
+					//					}
 					return text.join("\n");
 				}
 			},
@@ -99,10 +100,10 @@
 		},
 		ready() {
 			this.LinkMarket(); //行情
-			this.LinkUser(); //交易
+			//			this.LinkUser(); //交易
 			this.LinkTrade();
 			this.queryFengKong();
-			clearTimeout(window.getFengKong);
+			clearInterval(window.getFengKong);
 			window.getFengKong = setInterval(this.queryFengKong, 1000 * 60 * 10);
 		},
 		components: {
