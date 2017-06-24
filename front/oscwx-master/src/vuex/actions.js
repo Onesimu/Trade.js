@@ -152,6 +152,10 @@ export const logoutEvent = ({
 		isDisabledLoginBtn: false,
 		loginCnt: 0
 	});
+	//用户退出登录后重置热门合约
+	martSrv.close();
+	//	LinkMarket(store);
+	//	store.dispatch(Types.clearHot, true);
 	window.location.hash = "/default";
 }
 //接收到登录信息
@@ -168,9 +172,9 @@ export const getLoginInfo = (store, obj) => {
 			RshowRegist: false //注册显示
 		});
 		//用户登录后重置热门合约
-		//				martSrv.close();
-		//				LinkMarket(store);
-		//				store.dispatch(Types.clearHot, true);
+		martSrv.close();
+		LinkMarket(store);
+		store.dispatch(Types.clearHot, true);
 		//提示：缓存到本地
 		window.localStorage.account = Account;
 		window.localStorage.nick = obj.nick;
