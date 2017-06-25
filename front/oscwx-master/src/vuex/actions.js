@@ -174,7 +174,7 @@ export const getLoginInfo = (store, obj) => {
 		//用户登录后重置热门合约
 		martSrv.close();
 		LinkMarket(store);
-		store.dispatch(Types.clearHot, true);
+		//		store.dispatch(Types.clearHot, true);
 		//提示：缓存到本地
 		window.localStorage.account = Account;
 		window.localStorage.nick = obj.nick;

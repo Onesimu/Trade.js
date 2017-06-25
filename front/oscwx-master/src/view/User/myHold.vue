@@ -6,7 +6,7 @@
 			<acc :show="$index==index && isOpen==true">
 				<div class="acc_left" slot="left">
 					<span class="name">合约名称：{{item.tradName}}</span>
-					<span class="winLoss">盈亏：{{item.direction == 1 ? (hotContract[item.tradName].newPrice!='none'?((hotContract[item.tradName].newPrice - item.price ) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2):item.winLoss):(hotContract[item.tradName].newPrice!='none'?((item.price - hotContract[item.tradName].newPrice) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2):item.winLoss)}}</span>
+					<span class="winLoss">盈亏：{{yingkui(item)}}</span>
 				</div>
 				<div slot="body">
 					<div class="firstRow">
@@ -197,7 +197,13 @@
 		},
 		methods: {
 			localDate(str) {
-				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2))-1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
+				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
+			},
+			yingkui(item) {
+				if(this.hotContract[item.tradName]) {
+					let hotContract = this.hotContract;
+					return item.direction == 1 ? (hotContract[item.tradName].newPrice != 'none' ? ((hotContract[item.tradName].newPrice - item.price) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2) : item.winLoss) : (hotContract[item.tradName].newPrice != 'none' ? ((item.price - hotContract[item.tradName].newPrice) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2) : item.winLoss);
+				}
 			}
 		},
 		route: {

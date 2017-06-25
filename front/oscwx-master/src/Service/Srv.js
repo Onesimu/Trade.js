@@ -36,7 +36,9 @@ export class Srv {
 	}
 	//连接服务器
 	init() {
-		this.socket = new ReconnectingWebSocket(this.ws);
+		//		this.socket = new ReconnectingWebSocket(this.ws);
+		//		this.socket.maxReconnectAttempts = this.repeat;
+		this.socket = new WebSocket(this.ws);
 		this.state();
 	}
 	state() {
@@ -78,8 +80,8 @@ export class Srv {
 				setUserState(_this.store, true);
 			}
 			if(_this.repeat >= 0) {
-				_this.repeat--;
-				_this.init();
+				//				_this.repeat--;
+				//				_this.init();
 			}
 		};
 		this.socket.onmessage = function(evt) {

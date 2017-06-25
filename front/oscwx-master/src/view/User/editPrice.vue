@@ -78,7 +78,7 @@
 		},
 		ready() {
 			var key = this.myHold[this.index].tradName;
-			if(this.hotContract[key].minUnit != 0) {
+			if(this.hotContract[key] && this.hotContract[key].minUnit != 0) {
 				this.minUnit = this.hotContract[key].minUnit;
 			}
 		},
@@ -144,10 +144,13 @@
 		computed: {
 			newPrice() {
 				var key = this.myHold[this.index].tradName;
-				if(this.hotContract[key].newPrice == "none") {
-					return "--";
+				if(this.hotContract[key]) {
+					if(this.hotContract[key].newPrice == "none") {
+						return "--";
+					}
+					return this.hotContract[key].newPrice;
 				}
-				return this.hotContract[key].newPrice;
+				return '--';
 			},
 			winTitle() {
 				var dir = this.myHold[this.index].direction;

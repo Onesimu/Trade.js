@@ -307,7 +307,7 @@
 				var sum = 0;
 				for(let v in this.myHold) {
 					var myHold = this.myHold[v];
-					if(myHold.cur == this.cur) {
+					if(myHold.cur == this.cur && this.hotData[myHold.tradName]) {
 						if(myHold.direction == 1) {
 							if(this.hotData[myHold.tradName].newPrice != 'none') {
 								sum += parseFloat((this.hotData[myHold.tradName].newPrice - myHold.price) * this.hotData[myHold.tradName].oneCost * myHold.holdNum - myHold.poundage);
@@ -343,7 +343,7 @@
 				 * */
 				for(let v in this.myHold) {
 					var myHold = this.myHold[v];
-					if(myHold.cur == this.cur) {
+					if(myHold.cur == this.cur && this.hotData[myHold.tradName]) {
 						if(myHold.direction == 1) {
 							if(this.hotData[myHold.tradName].newPrice != 'none') {
 								sum += parseFloat((this.hotData[myHold.tradName].newPrice - myHold.price) * this.hotData[myHold.tradName].oneCost * myHold.holdNum - myHold.poundage);
