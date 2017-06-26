@@ -213,7 +213,8 @@
 			},
 			onHide() {
 				//				window.history.go(-1);
-				this.cancel();
+				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
+				//				this.cancel();
 				//				v-link="{ name: 'tradInfo', params: { id: item.code,name:item.cn,cur:item.cur}}"
 			},
 			cancel() {

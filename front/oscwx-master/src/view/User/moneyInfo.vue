@@ -3,7 +3,7 @@
 	<div id="moneyInfo">
 		<div class="row" v-for="item in res">
 			<span class="name">{{item.cur}}</span>
-			<countup class="money" :end-val="item.val" :decimals="item.decimals" :options="options"></countup>
+			<countup class="money" :end-val="item.val" :decimals="item.decimals" :duration="0.2" :options="options"></countup>
 		</div>
 	</div>
 </template>
