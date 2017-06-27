@@ -192,6 +192,7 @@
 				//				}
 				this.loadingShow = true;
 				this.setTradingHistory(this.account, start, end);
+				return;
 			},
 			nowDate() {
 				var myDate = new Date();
@@ -207,10 +208,11 @@
 				return res;
 			},
 			localDate(str) {
-				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
-			}
-		},
-		computed: {
+				//				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
+				return str.substr(0, 4) + '年' + str.substr(4, 2) + '月' + str.substr(6, 2) + '日 ' + str.substr(8, 2) + ':' + str.substr(10, 2) + ':' + str.substr(12, 2);
+		}
+	},
+	computed: {
 			getDate() {
 				var myDate = new Date();
 				var month = myDate.getMonth() + 1;

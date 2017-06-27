@@ -197,24 +197,25 @@
 		},
 		methods: {
 			localDate(str) {
-				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
-			},
-			yingkui(item) {
-				if(this.hotContract[item.tradName]) {
-					let hotContract = this.hotContract;
-					return item.direction == 1 ? (hotContract[item.tradName].newPrice != 'none' ? ((hotContract[item.tradName].newPrice - item.price) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2) : item.winLoss) : (hotContract[item.tradName].newPrice != 'none' ? ((item.price - hotContract[item.tradName].newPrice) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2) : item.winLoss);
-				}
-			}
+				//				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();\n
+				return str.substr(0, 4) + '年' + str.substr(4, 2) + '月' + str.substr(6, 2) + '日 ' + str.substr(8, 2) + ':' + str.substr(10, 2) + ':' + str.substr(12, 2);
 		},
-		route: {
-			data(res) {
-				if(res.to.name == "myHold") {
-					if(/user/.test(res.from.path) || /tradInfo/.test(res.from.path)) {
-						this.isOpen = false;
-					}
-					this.index = parseInt(res.to.params.index);
-				}
+		yingkui(item) {
+			if(this.hotContract[item.tradName]) {
+				let hotContract = this.hotContract;
+				return item.direction == 1 ? (hotContract[item.tradName].newPrice != 'none' ? ((hotContract[item.tradName].newPrice - item.price) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2) : item.winLoss) : (hotContract[item.tradName].newPrice != 'none' ? ((item.price - hotContract[item.tradName].newPrice) * hotContract[item.tradName].oneCost * item.holdNum - item.poundage).toFixed(2) : item.winLoss);
 			}
 		}
+	},
+	route: {
+		data(res) {
+			if(res.to.name == "myHold") {
+				if(/user/.test(res.from.path) || /tradInfo/.test(res.from.path)) {
+					this.isOpen = false;
+				}
+				this.index = parseInt(res.to.params.index);
+			}
+		}
+	}
 	}
 </script>

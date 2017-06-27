@@ -119,6 +119,11 @@
 		},
 		methods: {
 			sure() {
+				this.isClick = true;
+				this.loadShow = true;
+				this.start = true;
+				this.time = 30;
+
 				var myDate = new Date();
 				var ymd = "" + myDate.getFullYear() + (myDate.getMonth() + 1) + myDate.getDate();
 				var hms = "" + myDate.getHours() + myDate.getMinutes() + myDate.getSeconds();
@@ -136,10 +141,7 @@
 					hms: hms,
 					id: id
 				});
-				this.isClick = true;
-				this.loadShow = true;
-				this.start = true;
-				this.time = 30;
+				return;
 			},
 			cancel() {
 				window.location.hash = "/myHold/" + this.index;

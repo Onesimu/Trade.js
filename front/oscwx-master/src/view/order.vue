@@ -142,20 +142,24 @@
 						if(this.winPrice <= this.newPrice && this.isWin) {
 							$("#orderHint").html("止盈价必须大于最新价");
 							this.errPrice = true;
+							this.isClick = false;
 							return;
 						} else if(this.lowPrice >= this.newPrice && this.isLow) {
 							$("#orderHint").html("止损价必须小于最新价");
 							this.errPrice = true;
+							this.isClick = false;
 							return;
 						}
 					} else {
 						if(this.winPrice >= this.newPrice && this.isWin) {
 							$("#orderHint").html("止盈价必须小于最新价");
 							this.errPrice = true;
+							this.isClick = false;
 							return;
 						} else if(this.lowPrice <= this.newPrice && this.isLow) {
 							$("#orderHint").html("止损价必须大于最新价");
 							this.errPrice = true;
+							this.isClick = false;
 							return;
 						}
 					}
@@ -196,6 +200,10 @@
 					}
 				}
 
+				this.loadShow = true;
+				this.start = true;
+				this.time = 30;
+
 				this.setOpenOrder({
 					account: this.account,
 					name: this.key,
@@ -207,9 +215,8 @@
 					hms: hms,
 					isClick: true
 				});
-				this.loadShow = true;
-				this.start = true;
-				this.time = 30;
+
+				return;
 			},
 			onHide() {
 				//				window.history.go(-1);
