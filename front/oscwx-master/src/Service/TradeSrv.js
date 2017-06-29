@@ -134,7 +134,7 @@ export class TradeSrv {
 		});
 	}
 	//开仓
-	setOpenOrder(obj) {
+	setOpenOrder(obj, token) {
 		var data = this.createData();
 		data[0] = "20";
 		data[1] = obj.account;
@@ -149,7 +149,8 @@ export class TradeSrv {
 		var str = this.sendMsg(data);
 		//this.socket.send(str);
 		$.post(getContextHost() + "/app/service/trade", {
-			val: str
+			val: str,
+			token: token
 		}, (data) => {
 			var arr = data.split("/");
 			var typeNum = arr[0].substr(4);
@@ -166,7 +167,7 @@ export class TradeSrv {
 		});
 	}
 	//平仓
-	setPingCangOrder(obj) {
+	setPingCangOrder(obj, token) {
 		var data = this.createData();
 		data[0] = "21";
 		data[1] = obj.account;
@@ -181,7 +182,8 @@ export class TradeSrv {
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
 		$.post(getContextHost() + "/app/service/trade", {
-			val: str
+			val: str,
+			token: token
 		}, (data) => {
 			var arr = data.split("/");
 			var typeNum = arr[0].substr(4);
@@ -200,7 +202,7 @@ export class TradeSrv {
 		});
 	}
 	//修改损赢
-	setWinLoss(obj) {
+	setWinLoss(obj, token) {
 		var data = this.createData();
 		data[0] = "22";
 		data[1] = obj.account;
@@ -213,7 +215,8 @@ export class TradeSrv {
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
 		$.post(getContextHost() + "/app/service/trade", {
-			val: str
+			val: str,
+			token: token
 		}, (data) => {
 			var arr = data.split("/");
 			var typeNum = arr[0].substr(4);

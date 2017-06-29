@@ -18,7 +18,7 @@
 		</loading>
 		<alert :show.sync="winLossState.isShow" title="提示" button-text="确定" @on-hide="onHide">
 			<div style="text-align: center;">
-				<p>{{winLossState.state=="00"?'操作成功':'操作失败'}}</p>
+				<p>{{winLossState.state=="00"?'操作成功':winLossState.msg}}</p>
 			</div>
 		</alert>
 		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
@@ -67,13 +67,14 @@
 			return {
 				index: 0,
 				errPrice: false,
-				minUnit: 0.5,
+				minUnit: 1,
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
 				isClick: false,
 				isAlter: false,
-				alterContent: '网络超时'
+				alterContent: '网络超时',
+				token: ''
 			}
 		},
 		ready() {
@@ -81,6 +82,9 @@
 			if(this.hotContract[key] && this.hotContract[key].minUnit != 0) {
 				this.minUnit = this.hotContract[key].minUnit;
 			}
+			$.post(getContextHost() + "/app/token", (data) => {
+				this.token = data;
+			});
 		},
 		methods: {
 			sure() {
@@ -134,7 +138,8 @@
 					ymd: ymd,
 					hms: hms,
 					id: id,
-				});
+				}, this.token);
+				this.token = '';
 				return;
 			},
 			cancel() {

@@ -73,11 +73,14 @@
 				this.loadShow = true;
 				//				this.start = true;
 				this.time = 30;
+				this.isAlter = false;
 			},
 			cancel() {
 				window.location.hash = "/myHold/" + this.index;
 			},
 			onHide() {
+				this.time = 30;
+				this.isAlter = false;
 				//				window.location.hash = "/myHold/" + index;
 				//				window.history.go(-1);
 			}

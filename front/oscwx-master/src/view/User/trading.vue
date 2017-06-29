@@ -28,7 +28,7 @@
 					<div class="val">
 						<span>{{item.tradNum}}</span>
 						<span>{{item.makeType == 1?'多':'空'}}</span>
-						<span>{{item.price}}</span>
+						<span>{{parseFloat(item.price)}}</span>
 						<span>{{item.poundage}}</span>
 						<span>{{item.state}}</span>
 						<span>{{localDate(item.time)}}</span>
@@ -126,6 +126,7 @@
 	import Acc from "component/Accordion"
 	import Alert from "vux/src/components/alert"
 	import LoadingTime from "component/LoadingTime"
+	import DateFormatter from 'vux/src/components/datetime/format'
 	export default {
 		data() {
 			return {
@@ -208,11 +209,11 @@
 				return res;
 			},
 			localDate(str) {
-				//				return new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)).toLocaleString();
+				//				return DateFormatter(new Date(str.substr(0, 4), parseInt(str.substr(4, 2)) - 1, str.substr(6, 2), str.substr(8, 2), str.substr(10, 2), str.substr(12, 2)), 'YYYY-MM-DD HH:mm:ss');
 				return str.substr(0, 4) + '年' + str.substr(4, 2) + '月' + str.substr(6, 2) + '日 ' + str.substr(8, 2) + ':' + str.substr(10, 2) + ':' + str.substr(12, 2);
-		}
-	},
-	computed: {
+			}
+		},
+		computed: {
 			getDate() {
 				var myDate = new Date();
 				var month = myDate.getMonth() + 1;
@@ -244,6 +245,10 @@
 					this.loadingShow = false;
 					//					this.isClick = false;
 					//					this.isAlter = true;
+					if(this.res.length > 90) {
+						this.alertMsg = '查询数据量较大时,部分数据可能显示不全'
+						this.isAlert = !this.isAlert;
+					}
 				},
 				deep: true
 			}

@@ -4,6 +4,7 @@
 import * as Types from "./types"
 import { Srv } from "../Service/Srv"
 import { TradeSrv } from "../Service/TradeSrv"
+import DateFormatter from 'vux/src/components/datetime/format'
 
 //登录按钮事件
 var Account = "";
@@ -63,16 +64,16 @@ export const setMarkData = ({
 		rowObj.code = rowArr[0]; //合约代码
 		rowObj.cn = rowArr[1]; //合约中文
 		rowObj.cur = rowArr[2]; //币种
-		rowObj.maxTrans = rowArr[3]; //最大交易手数
-		rowObj.oneCost = rowArr[4]; //一个波动点的价值
+		rowObj.maxTrans = parseFloat(rowArr[3]); //最大交易手数
+		rowObj.oneCost = parseFloat(rowArr[4]); //一个波动点的价值
 		rowObj.minUnit = parseFloat(rowArr[5]); //最小波动单位
-		rowObj.openCash = rowArr[6]; //开仓保证金
+		rowObj.openCash = parseFloat(rowArr[6]); //开仓保证金
 		rowObj.holdCash = parseFloat(rowArr[7]); //持仓保证金
-		rowObj.newPrice = rowArr[8] == "" ? "none" : parseFloat(rowArr[8]); //最新价格，以分为单位
-		rowObj.upDown = "no"; //涨跌，以分为单位
+		rowObj.newPrice = rowArr[8] == "" ? 'none' : parseFloat(rowArr[8]); //最新价格，以分为单位
+		rowObj.upDown = 'no'; //涨跌，以分为单位
 		rowObj.buyOnePri = parseFloat(rowArr[9]); //买一价
 		rowObj.saleOnePri = parseFloat(rowArr[10]); //卖一价
-		rowObj.markePri = ""; //市价
+		rowObj.markePri = 0; //市价
 		rowObj.time = ""; //时间
 		//}
 		arr.push(rowObj);
@@ -247,7 +248,8 @@ export const getMarketFengKong = (store, str) => {
 	let fengKongInfo = {};
 	for(let item in tradeType) {
 		for(let timeItem = 0; timeItem < tradeType[item].length; timeItem++) {
-			let nowTime = new Date().toTimeString().substring(0, 8);
+			let nowTime = DateFormatter(new Date(), 'HH:mm:ss');
+			//			let nowTime = new Date().toTimeString().substring(0, 8);
 			let startTime = tradeType[item][timeItem].start;
 			let endTime = tradeType[item][timeItem].end;
 
@@ -353,7 +355,7 @@ export const getTradingHistory = ({
 			data.push(rowObj);
 		}
 	}
-	data.sort((a, b) => b.code - a.code);
+	data.sort((a, b) => b.time - a.time);
 	dispatch(Types.TradingHistory, data);
 }
 //请求入金流水
@@ -439,10 +441,10 @@ var openClick = false;
 //请求开仓的数据
 export const setOpenOrder = ({
 	dispatch
-}, obj) => {
+}, obj, token) => {
 	openClick = obj.isClick;
 	//userSrv.setOpenOrder(obj);
-	tradeSrv.setOpenOrder(obj);
+	tradeSrv.setOpenOrder(obj, token);
 }
 //接收开仓的数据
 export const getOpenOrder = (state, obj) => {
@@ -458,10 +460,10 @@ export const getOpenOrder = (state, obj) => {
 var pcId = "";
 export const setPingCang = ({
 	dispatch
-}, obj) => {
+}, obj, token) => {
 	pcId = obj.id;
 	//	userSrv.setPingCangOrder(obj);
-	tradeSrv.setPingCangOrder(obj);
+	tradeSrv.setPingCangOrder(obj, token);
 }
 //接收平仓的数据
 export const getPingCang = (state, obj) => {
@@ -482,9 +484,9 @@ export const getPingCang = (state, obj) => {
 //请求修改止盈
 export const setWinLoss = ({
 	dispatch
-}, obj) => {
+}, obj, token) => {
 	//	userSrv.setWinLoss(obj);
-	tradeSrv.setWinLoss(obj);
+	tradeSrv.setWinLoss(obj, token);
 }
 //接收修改止盈
 export const getWinLoss = ({

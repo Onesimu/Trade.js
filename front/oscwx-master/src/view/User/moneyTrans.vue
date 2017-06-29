@@ -207,19 +207,19 @@
 				if(this.defaultValue == "z_rmb") {
 					str = "1:1";
 				} else if(this.defaultValue == "z_gy") {
-					str = parseFloat(this.moneyRate.z_gy).toFixed(4).toString() + ":1";
+					str = this.moneyRate.z_gy + ":1";
 				} else if(this.defaultValue == "z_usa") {
-					str = parseFloat(this.moneyRate.z_usa).toFixed(4).toString() + ":1";
+					str = this.moneyRate.z_usa + ":1";
 				} else if(this.defaultValue == "z_eur") {
-					str = parseFloat(this.moneyRate.z_eur).toFixed(4).toString() + ":1";
+					str = this.moneyRate.z_eur + ":1";
 				} else if(this.defaultValue == "rmb_z") {
 					str = "1:1";
 				} else if(this.defaultValue == "gy_z") {
-					str = "1:" + parseFloat(this.moneyRate.gy_z).toFixed(4).toString();
+					str = "1:" + this.moneyRate.gy_z;
 				} else if(this.defaultValue == "usa_z") {
-					str = "1:" + parseFloat(this.moneyRate.usa_z).toFixed(4).toString();
+					str = "1:" + this.moneyRate.usa_z;
 				} else if(this.defaultValue == "eur_z") {
-					str = "1:" + parseFloat(this.moneyRate.eur_z).toFixed(4).toString();
+					str = "1:" + this.moneyRate.eur_z;
 				}
 				return str;
 			}

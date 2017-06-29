@@ -77,12 +77,12 @@
 				key: 0,
 				buyNum: 1, //购买手数
 				isLow: false, //止损是否显示
-				lowPrice: "", //止损价
+				lowPrice: 0, //止损价
 				isWin: false, //止盈是否显示
-				winPrice: "", //止盈价
+				winPrice: 0, //止盈价
 				options: ['即时买入'],
 				errPrice: false,
-				minUnit: 0.5,
+				minUnit: 1,
 				isClick: false,
 				selectOptions: [{
 						key: 'template',
@@ -104,7 +104,8 @@
 				timeHandle: null,
 				time: 30,
 				isAlter: false,
-				alterContent: '网络超时'
+				alterContent: '网络超时',
+				token: ''
 			}
 		},
 		vuex: {
@@ -214,8 +215,8 @@
 					ymd: ymd,
 					hms: hms,
 					isClick: true
-				});
-
+				}, this.token);
+				this.token = '';
 				return;
 			},
 			onHide() {
@@ -234,6 +235,9 @@
 			if(this.hotData[this.key].minUnit != 0) {
 				this.minUnit = this.hotData[this.key].minUnit;
 			}
+			$.post(getContextHost() + "/app/token", (data) => {
+				this.token = data;
+			});
 		},
 		computed: {
 			tradName() {

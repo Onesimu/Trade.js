@@ -71,7 +71,8 @@
 				time: 30,
 				isClick: false,
 				isAlter: false,
-				alterContent: '网络超时'
+				alterContent: '网络超时',
+				token: ''
 			}
 		},
 		components: {
@@ -117,6 +118,11 @@
 				return this.time;
 			}
 		},
+		ready() {
+			$.post(getContextHost() + "/app/token", (data) => {
+				this.token = data;
+			});
+		},
 		methods: {
 			sure() {
 				this.isClick = true;
@@ -140,7 +146,8 @@
 					ymd: ymd,
 					hms: hms,
 					id: id
-				});
+				}, this.token);
+				this.token = '';
 				return;
 			},
 			cancel() {
