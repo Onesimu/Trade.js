@@ -138,8 +138,18 @@ function candle(markcode, minute) {
 			tickPixelInterval: 70,
 			lineColor: "#383739",
 			gridLineColor: "#383739",
-			gridLineWidth: 0.5
-			// minRange: 3600 * 1000*24*30, // one month  
+			gridLineWidth: 0.5,
+			// minRange: 3600 * 1000*24*30, // one month 
+			dateTimeLabelFormats: {
+				millisecond: '%H:%M:%S.%L',
+				second: '%H:%M:%S',
+				minute: '%H:%M',
+				hour: '%H:%M',
+				day: '%b%e日',
+				week: '%b. %e',
+				month: '%y \'%b',
+				year: '%Y'
+			},
 		},
 		yAxis: [{
 			title: {
@@ -205,7 +215,9 @@ function tickChart(metcal_symbol) {
 			useUTC: false
 		},
 		lang: {
-			shortMonths: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+			months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+			shortMonths: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+			weekdays: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期天"]
 		}
 	});
 	var v_data = [];
@@ -281,7 +293,7 @@ function tickChart(metcal_symbol) {
 		tooltip: {
 
 			formatter: function() {
-				return Highcharts.dateFormat('%m/%d %H:%M', this.x) + '<br/>' +
+				return '<b>' + Highcharts.dateFormat('%Y-%m-%d  %H:%M', this.x, this.x) + '</b><br/>' +
 					"行情：" + Highcharts.numberFormat(this.y, v_decimal_digits);
 			}
 		},
@@ -324,6 +336,16 @@ function tickChart(metcal_symbol) {
 		}],
 		xAxis: [{
 			height: v_height - 40,
+			dateTimeLabelFormats: {
+				millisecond: '%H:%M:%S.%L',
+				second: '%H:%M:%S',
+				minute: '%H:%M',
+				hour: '%H:%M',
+				day: '%b%e日',
+				week: '%b. %e',
+				month: '%y \'%b',
+				year: '%Y'
+			},
 			crosshair: {
 				width: 1,
 				color: 'red',

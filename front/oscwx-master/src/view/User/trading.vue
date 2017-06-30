@@ -134,7 +134,7 @@
 				end: 0,
 				isAlert: false,
 				loadingShow: false,
-				alertMsg: '查询时间的跨度不要超过30天'
+				alertMsg: '查询时间的跨度不要超过7天'
 			}
 		},
 		vuex: {
@@ -177,7 +177,8 @@
 				var end = this.end;
 				start = start == 0 ? this.nowDate() : start;
 				end = end == 0 ? this.nowDate() : end;
-				if(this.diff(end, start) > 30) {
+				if(this.diff(end, start) > 7) {
+					this.alertMsg = '查询时间的跨度不要超过7天!'
 					this.isAlert = !this.isAlert;
 					return;
 				}

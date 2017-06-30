@@ -91,9 +91,22 @@
 				if(this.price == "") {
 					return;
 				}
-				var dir = this.myHold[this.index].direction;
 				var winPrice = $("#winInput .vux-number-input").val();
 				var lossPrice = $("#lossInput .vux-number-input").val();
+				//				if(winPrice == '' || lossPrice == '') {
+				//					return;
+				//				}
+				if(isNaN(winPrice) || isNaN(lossPrice)) {
+					$("#priceHint").html("请填写有效的数字,不能含有字母或其他字符");
+					this.errPrice = true;
+					return;
+				}
+				if(winPrice.length > 10 || lossPrice.length > 10) {
+					$("#priceHint").html("最多输入十位有效数字");
+					this.errPrice = true;
+					return;
+				}
+				var dir = this.myHold[this.index].direction;
 				if(dir == 1) {
 					if(parseFloat(winPrice) != 0 && winPrice <= this.newPrice) {
 						$("#priceHint").html("止盈价必须大于最新价");

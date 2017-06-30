@@ -63,7 +63,7 @@
 				loadingText: (state) => {
 					var text = [];
 					if(state.marketState == false) {
-						text.push("行情服务未链接,port:8850");
+						text.push("行情服务未链接...");
 					}
 					//					if(state.userState == false) {
 					//						text.push("交易服务未链接,port:8540");

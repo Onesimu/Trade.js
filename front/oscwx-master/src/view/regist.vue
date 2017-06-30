@@ -110,7 +110,7 @@
 		methods: {
 			regist() {
 				if(!(this.name && this.blankName && this.blankNum && this.tel && this.tuijianNum)) {
-					this.alterContent = '请填写完整后的信息再点击注册';
+					this.alterContent = '请填写完整的信息';
 					this.isAlter = true;
 					return;
 				}

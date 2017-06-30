@@ -15,7 +15,7 @@
 			<div style="text-align:center;">
 				<p>合约代码:{{pcState.code}}</p>
 				<p>平仓数量:{{pcState.num}}</p>
-				<p>成交价格:{{pcState.price}}</p>
+				<p>成交价格:{{price}}</p>
 				<p>手续费:{{pcState.poundage}}</p>
 				<p>盈亏:{{pcState.winLoss}}</p>
 			</div>
@@ -55,6 +55,7 @@
 			getters: {
 				account: (state) => state.userInfo.account,
 				myHold: (state) => state.myHold,
+				hotContract: (state) => state.hotContract,
 				pcState: (state) => state.pcState,
 				isLogin: (state) => state.userInfo.isLogin,
 			},
@@ -66,6 +67,7 @@
 		data() {
 			return {
 				index: 0,
+				minUnit: 1,
 				loadShow: false,
 				timeHandle: null,
 				time: 30,
@@ -116,12 +118,22 @@
 					self.time--;
 				}, 1000);
 				return this.time;
+			},
+			price() {
+				if(this.pcState.price != '') {
+					return parseFloat(this.pcState.price).toFixed(this.fixedDecimal(this.minUnit.toString()))
+				}
+				return this.pcState.price;
 			}
 		},
 		ready() {
 			$.post(getContextHost() + "/app/token", (data) => {
 				this.token = data;
 			});
+			var key = this.myHold[this.index].tradName;
+			if(this.hotContract[key] && this.hotContract[key].minUnit != 0) {
+				this.minUnit = this.hotContract[key].minUnit;
+			}
 		},
 		methods: {
 			sure() {
@@ -159,6 +171,16 @@
 					index = 0;
 				}
 				window.location.hash = "/myHold/" + index;
+			},
+			fixedDecimal(value) {
+				if(value != null && value != '') {
+					var decimalIndex = value.indexOf('.');
+					if(decimalIndex != '-1') {
+						var decimalPart = value.substring(decimalIndex + 1, value.length);
+						return decimalPart.length + 2;
+					}
+				}
+				return 4;
 			}
 		},
 		route: {

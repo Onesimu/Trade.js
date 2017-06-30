@@ -265,7 +265,7 @@ export class TradeSrv {
 			var arr = data.split("/");
 			var typeNum = arr[0].substr(4);
 			if(typeNum = '23') {
-				var cn = arr[33] == "00" ? "修改成功" : "修改失败";
+				var cn = arr[34] != "" ? arr[34] : (arr[33] == "00" ? "修改成功" : "修改失败");
 				getUserPwd(this.store, {
 					account: arr[1],
 					stateNo: arr[33],

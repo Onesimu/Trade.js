@@ -7,11 +7,11 @@
 			<cell title="&nbsp;&nbsp;&nbsp;资金明细" is-link v-link="{path:'/moneyInfo'}">
 				<span class="icon zjmx" slot="icon"></span>
 			</cell>
-			<cell title="&nbsp;&nbsp;&nbsp;交易记录" is-link v-link="{path:'/userTrading'}">
-				<span class="icon jyjl" slot="icon"></span>
-			</cell>
 			<cell title="&nbsp;&nbsp;&nbsp;我的持仓" is-link v-link="{ name: 'myHold', params: {index:0}}">
 				<span class="icon kyzj" slot="icon"></span>
+			</cell>
+			<cell title="&nbsp;&nbsp;&nbsp;交易记录" is-link v-link="{path:'/userTrading'}">
+				<span class="icon jyjl" slot="icon"></span>
 			</cell>
 			<cell title="&nbsp;&nbsp;&nbsp;资金划转" is-link v-link="{path:'/moneyTrans'}">
 				<span class="icon zjhz" slot="icon"></span>

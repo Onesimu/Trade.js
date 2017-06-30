@@ -23,8 +23,8 @@
 				<div style="text-align:center;">
 					<p>持仓编号:{{openOrder.id}}</p>
 					<p>合约代码:{{openOrder.code}}</p>
-					<p>成交价格:{{openOrder.price| currency '' '2'}}</p>
-					<p>手续费:{{openOrder.poundage| currency '' '2'}}</p>
+					<p>成交价格:{{price}}</p>
+					<p>手续费:{{openOrder.poundage}}</p>
 				</div>
 			</alert>
 			<alert :show.sync="errPrice" title="提示" button-text="确定">
@@ -227,6 +227,16 @@
 			},
 			cancel() {
 				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
+			},
+			fixedDecimal(value) {
+				if(value != null && value != '') {
+					var decimalIndex = value.indexOf('.');
+					if(decimalIndex != '-1') {
+						var decimalPart = value.substring(decimalIndex + 1, value.length);
+						return decimalPart.length + 2;
+					}
+				}
+				return 4;
 			}
 		},
 		ready() {
@@ -245,6 +255,12 @@
 			},
 			newPrice() {
 				return this.hotData[this.key].newPrice;
+			},
+			price() {
+				if(this.openOrder.price != '') {
+					return parseFloat(this.openOrder.price).toFixed(this.fixedDecimal(this.minUnit.toString()))
+				}
+				return this.openOrder.price;
 			},
 			daojishi() {
 				if(this.loadShow == false) {
