@@ -20,6 +20,9 @@
 				<p>盈亏:{{pcState.winLoss}}</p>
 			</div>
 		</alert>
+		<alert :show.sync="errPrice" title="提示" button-text="确定">
+			<div id="orderHint" style="text-align: center;"></div>
+		</alert>
 		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
 			<div style="text-align: center;">
 				{{{alterContent}}}
@@ -74,6 +77,7 @@
 				isClick: false,
 				isAlter: false,
 				alterContent: '网络超时',
+				errPrice: false,
 				token: ''
 			}
 		},
@@ -138,6 +142,27 @@
 		methods: {
 			sure() {
 				this.isClick = true;
+				var num = $("#pcNum .vux-number-input").val();
+
+				if(isNaN(num)) {
+					$("#orderHint").html("请填写有效的数字,不能含有字母或其他字符");
+					this.errPrice = true;
+					this.isClick = false;
+					return;
+				}
+				if(num > parseInt(this.myHold[this.index].holdNum)) {
+					$("#orderHint").html("超过持仓手数");
+					this.errPrice = true;
+					this.isClick = false;
+					return;
+				}
+				if(num < 1) {
+					$("#orderHint").html("平仓手数至少为1");
+					this.errPrice = true;
+					this.isClick = false;
+					return;
+				}
+
 				this.loadShow = true;
 				this.start = true;
 				this.time = 30;
@@ -149,7 +174,6 @@
 				var id = temp.id;
 				var code = temp.tradName;
 				var dir = 0 - (parseInt(temp.direction));
-				var num = $("#pcNum .vux-number-input").val();
 				this.setPingCang({
 					account: this.account,
 					code: code,

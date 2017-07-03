@@ -138,6 +138,18 @@
 				//				window.orderClickTime = setTimeout(function() {
 				//					_this.isClick = false;
 				//				}, 1500);
+				if(isNaN(this.winPrice) || isNaN(this.lowPrice)) {
+					$("#orderHint").html("请填写有效的数字,不能含有字母或其他字符");
+					this.errPrice = true;
+					this.isClick = false;
+					return;
+				}
+				if(this.winPrice.length > 10 || this.lowPrice.length > 10) {
+					$("#orderHint").html("最多输入十位有效数字");
+					this.errPrice = true;
+					this.isClick = false;
+					return;
+				}
 				if(this.curSelect == "point") {
 					if(this.type == 1) {
 						if(this.winPrice <= this.newPrice && this.isWin) {
@@ -241,7 +253,9 @@
 		},
 		ready() {
 			//买多（1）还是买空（-1）
-			this.lowPrice = this.winPrice = this.hotData[this.key].newPrice;
+			if(this.hotData[this.key].newPrice != 'none') {
+				this.lowPrice = this.winPrice = this.hotData[this.key].newPrice;
+			}
 			if(this.hotData[this.key].minUnit != 0) {
 				this.minUnit = this.hotData[this.key].minUnit;
 			}

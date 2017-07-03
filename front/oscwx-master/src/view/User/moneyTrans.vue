@@ -118,7 +118,7 @@
 				if(this.defaultValue == "eur_z") {
 					dir = "40";
 				}
-				if(this.outPrice > this.money || this.outPrice == "") {
+				if(this.outPrice > this.money || this.outPrice == "" || this.money <= 0) {
 					return;
 				}
 				this.setMoneyTrans({
