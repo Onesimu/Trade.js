@@ -15,10 +15,6 @@
 				<x-button :disabled="isClick" :type="this.type==1?'warn':'primary'" @click="clickBtn">{{this.type==1?'确定买涨':'确定买跌'}}</x-button>
 				<x-button type="default" @click="cancel">取消</x-button>
 			</div>
-			<loading :show="loadShow" text="">
-				<p>请求处理中,请稍等......</p>
-				<p>{{daojishi}}s</p>
-			</loading>
 			<alert :show.sync="openOrder.isShow" :title="openOrder.msg" button-text="确定" @on-hide="onHide">
 				<div style="text-align:center;">
 					<p>持仓编号:{{openOrder.id}}</p>
@@ -29,11 +25,6 @@
 			</alert>
 			<alert :show.sync="errPrice" title="提示" button-text="确定">
 				<div id="orderHint" style="text-align: center;"></div>
-			</alert>
-			<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
-				<div style="text-align: center;">
-					{{{alterContent}}}
-				</div>
 			</alert>
 		</template>
 	</div>
@@ -100,11 +91,6 @@
 				//                    {key:"2",value : "2倍保证金"}
 				//                ],
 				selectRadioData: "0.5",
-				loadShow: false,
-				timeHandle: null,
-				time: 30,
-				isAlter: false,
-				alterContent: '网络超时',
 				token: ''
 			}
 		},
@@ -213,10 +199,6 @@
 					}
 				}
 
-				this.loadShow = true;
-				this.start = true;
-				this.time = 30;
-
 				this.setOpenOrder({
 					account: this.account,
 					name: this.key,
@@ -276,23 +258,6 @@
 				}
 				return this.openOrder.price;
 			},
-			daojishi() {
-				if(this.loadShow == false) {
-					return;
-				}
-				var self = this;
-				window.clearTimeout(this.timeHandle);
-				if(this.time == -1) {
-					//					this.time = 30;
-					this.loadShow = false;
-					this.isAlter = true;
-					return;
-				}
-				this.timeHandle = window.setTimeout(function() {
-					self.time--;
-				}, 1000);
-				return this.time;
-			},
 			radioData() {
 				//                if(this.type == 1){ //买多
 				//                    //止盈点差 = 持仓保证金 * 倍数 * 2 / （第5个字段*第6个字段）
@@ -323,23 +288,6 @@
 						value: "止损" + d * 2 + cur + ",止盈" + d * 2 * 2 + cur
 					}
 				];
-			}
-		},
-		watch: {
-			'openOrder': {
-				handler: function(val, oldVal) {
-					this.start = false;
-					this.time = 30;
-					this.loadShow = false;
-					//					this.isClick = false;
-					//					this.isAlter = true;
-					if(this.openOrder.state == "00") {
-						this.alterContent = '';
-					} else {
-						this.alterContent = '';
-					}
-				},
-				deep: true
 			}
 		},
 		route: {

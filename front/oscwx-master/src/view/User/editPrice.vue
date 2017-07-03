@@ -12,18 +12,9 @@
 		<alert :show.sync="errPrice" title="提示" button-text="确定">
 			<div id="priceHint" style="text-align: center;"></div>
 		</alert>
-		<loading :show="loadShow" text="">
-			<p>请求处理中,请稍等......</p>
-			<p>{{daojishi}}s</p>
-		</loading>
 		<alert :show.sync="winLossState.isShow" title="提示" button-text="确定" @on-hide="onHide">
 			<div style="text-align: center;">
 				<p>{{winLossState.state=="00"?'操作成功':winLossState.msg}}</p>
-			</div>
-		</alert>
-		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
-			<div style="text-align: center;">
-				{{{alterContent}}}
 			</div>
 		</alert>
 	</div>
@@ -68,12 +59,7 @@
 				index: 0,
 				errPrice: false,
 				minUnit: 1,
-				loadShow: false,
-				timeHandle: null,
-				time: 30,
 				isClick: false,
-				isAlter: false,
-				alterContent: '网络超时',
 				token: ''
 			}
 		},
@@ -133,9 +119,6 @@
 					return;
 				}
 				this.isClick = true;
-				this.loadShow = true;
-				this.start = true;
-				this.time = 30;
 
 				var myDate = new Date();
 				var ymd = "" + myDate.getFullYear() + (myDate.getMonth() + 1) + myDate.getDate();
@@ -206,23 +189,6 @@
 					return 0.00;
 				}
 				return pri;
-			},
-			daojishi() {
-				if(this.loadShow == false) {
-					return;
-				}
-				var self = this;
-				window.clearTimeout(this.timeHandle);
-				if(this.time == -1) {
-					//					this.time = 30;
-					this.loadShow = false;
-					this.isAlter = true;
-					return;
-				}
-				this.timeHandle = window.setTimeout(function() {
-					self.time--;
-				}, 1000);
-				return this.time;
 			}
 		},
 		components: {
@@ -233,23 +199,6 @@
 			Cell,
 			xNumber,
 			loading
-		},
-		watch: {
-			'winLossState': {
-				handler: function(val, oldVal) {
-					this.start = false;
-					this.time = 30;
-					this.loadShow = false;
-					this.isClick = false;
-					//					this.isAlter = true;
-					if(this.winLossState.state == "00") {
-						this.alterContent = '';
-					} else {
-						this.alterContent = '';
-					}
-				},
-				deep: true
-			}
 		},
 		route: {
 			data(res) {

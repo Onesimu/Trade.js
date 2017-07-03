@@ -246,10 +246,11 @@
 					this.loadingShow = false;
 					//					this.isClick = false;
 					//					this.isAlter = true;
-					if(this.res.length > 90) {
-						this.alertMsg = '查询数据量较大时,部分数据可能显示不全'
-						this.isAlert = !this.isAlert;
-					}
+					
+					//					if(this.res.length > 90) {
+					//						this.alertMsg = '查询数据量较大时,部分数据可能显示不全'
+					//						this.isAlert = !this.isAlert;
+					//					}
 				},
 				deep: true
 			}

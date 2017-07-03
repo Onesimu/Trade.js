@@ -7,10 +7,6 @@
 			<x-button :disabled="isClick" type="primary" @click="sure">确定平仓</x-button>
 			<x-button type="default" @click="cancel">取消操作</x-button>
 		</div>
-		<loading :show="loadShow" text="">
-			<p>请求处理中,请稍等......</p>
-			<p>{{daojishi}}s</p>
-		</loading>
 		<alert :show.sync="pcState.isShow" :title="pcState.msg" button-text="确定" @on-hide="onHide">
 			<div style="text-align:center;">
 				<p>合约代码:{{pcState.code}}</p>
@@ -22,11 +18,6 @@
 		</alert>
 		<alert :show.sync="errPrice" title="提示" button-text="确定">
 			<div id="orderHint" style="text-align: center;"></div>
-		</alert>
-		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
-			<div style="text-align: center;">
-				{{{alterContent}}}
-			</div>
 		</alert>
 	</div>
 </template>
@@ -71,12 +62,7 @@
 			return {
 				index: 0,
 				minUnit: 1,
-				loadShow: false,
-				timeHandle: null,
-				time: 30,
 				isClick: false,
-				isAlter: false,
-				alterContent: '网络超时',
 				errPrice: false,
 				token: ''
 			}
@@ -88,41 +74,7 @@
 			loading,
 			Alert
 		},
-		watch: {
-			'pcState': {
-				handler: function(val, oldVal) {
-					this.start = false;
-					this.time = 30;
-					this.loadShow = false;
-					//					this.isClick = false;
-					//					this.isAlter = true;
-					if(this.pcState.state == "00") {
-						this.alterContent = '';
-					} else {
-						this.alterContent = '';
-					}
-				},
-				deep: true
-			}
-		},
 		computed: {
-			daojishi() {
-				if(this.loadShow == false) {
-					return;
-				}
-				var self = this;
-				window.clearTimeout(this.timeHandle);
-				if(this.time == -1) {
-					//					this.time = 30;
-					this.loadShow = false;
-					this.isAlter = true;
-					return;
-				}
-				this.timeHandle = window.setTimeout(function() {
-					self.time--;
-				}, 1000);
-				return this.time;
-			},
 			price() {
 				if(this.pcState.price != '') {
 					return parseFloat(this.pcState.price).toFixed(this.fixedDecimal(this.minUnit.toString()))
@@ -162,10 +114,6 @@
 					this.isClick = false;
 					return;
 				}
-
-				this.loadShow = true;
-				this.start = true;
-				this.time = 30;
 
 				var myDate = new Date();
 				var ymd = "" + myDate.getFullYear() + (myDate.getMonth() + 1) + myDate.getDate();
