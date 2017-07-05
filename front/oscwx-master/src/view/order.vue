@@ -21,6 +21,7 @@
 					<p>合约代码:{{openOrder.code}}</p>
 					<p>成交价格:{{price}}</p>
 					<p>手续费:{{openOrder.poundage}}</p>
+					<p>持仓数量:{{openOrder.num}}</p>
 				</div>
 			</alert>
 			<alert :show.sync="errPrice" title="提示" button-text="确定">
@@ -124,7 +125,7 @@
 				//				window.orderClickTime = setTimeout(function() {
 				//					_this.isClick = false;
 				//				}, 1500);
-				if(isNaN(this.winPrice) || isNaN(this.lowPrice)) {
+				if(isNaN(this.buyNum) || isNaN(this.winPrice) || isNaN(this.lowPrice)) {
 					$("#orderHint").html("请填写有效的数字,不能含有字母或其他字符");
 					this.errPrice = true;
 					this.isClick = false;

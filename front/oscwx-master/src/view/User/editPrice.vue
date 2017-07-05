@@ -92,6 +92,11 @@
 					this.errPrice = true;
 					return;
 				}
+				if(parseFloat(winPrice) < 0 || parseFloat(lossPrice) < 0) {
+					$("#priceHint").html("价格不能为负数");
+					this.errPrice = true;
+					return;
+				}
 				var dir = this.myHold[this.index].direction;
 				if(dir == 1) {
 					if(parseFloat(winPrice) != 0 && winPrice <= this.newPrice) {

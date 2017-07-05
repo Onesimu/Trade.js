@@ -158,6 +158,7 @@ export class TradeSrv {
 				getOpenOrder(this.store, {
 					code: arr[3], //合约代码
 					id: arr[6], //持仓编号
+					num: arr[20], //开仓数量
 					price: arr[26], //成交价格
 					poundage: arr[27], //手续费
 					state: arr[33], //返回结果，00 为成功
@@ -359,7 +360,7 @@ export class TradeSrv {
 	//风控持仓保证金信息获取
 	setMarketFengKong(account) {
 		var data = this.createData();
-		data[0] = "10";
+		data[0] = "14";
 		if(account != undefined) {
 			data[1] = account;
 		}
@@ -373,7 +374,7 @@ export class TradeSrv {
 			for(let i in msgs) {
 				let eachMsg = msgs[i].split('/');
 				let typeNum = eachMsg[0].substr(4);
-				if(typeNum == '10' && eachMsg[33] == '00') {
+				if(typeNum == '14' && eachMsg[33] == '00') {
 					fengKongStr += eachMsg[9];
 					if(eachMsg[17] == "END" || i == msgs.length - 1) {
 						let num = eachMsg[16] ? parseInt(eachMsg[16]) : msgs.length;
