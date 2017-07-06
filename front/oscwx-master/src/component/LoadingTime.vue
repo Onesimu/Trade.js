@@ -81,6 +81,7 @@
 			onHide() {
 				this.time = 30;
 				this.isAlter = false;
+				this.loadShow = false;
 				//				window.location.hash = "/myHold/" + index;
 				//				window.history.go(-1);
 			}

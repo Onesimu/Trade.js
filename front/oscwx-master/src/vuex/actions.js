@@ -136,27 +136,25 @@ export const LoginState = ({
 	dispatch(Types.LoginState, obj);
 }
 //退出登录
-export const logoutEvent = ({
-	dispatch
-}) => {
-	dispatch(Types.SetUserInfo, {
+export const logoutEvent = (store) => {
+	store.dispatch(Types.SetUserInfo, {
 		isLogin: false,
 		account: "",
 		password: 　 "",
 		nick: ""
 	});
-	dispatch(Types.SetHeadMsg, {
+	store.dispatch(Types.SetHeadMsg, {
 		Rtitle: "登录", //右侧的登录
 		RshowRegist: true //注册显示
 	});
-	dispatch(Types.LoginState, {
+	store.dispatch(Types.LoginState, {
 		isDisabledLoginBtn: false,
 		loginCnt: 0
 	});
 	//用户退出登录后重置热门合约
-	//	martSrv.close();
-	//	LinkMarket(store);
-	//	store.dispatch(Types.clearHot, true);
+	martSrv.close();
+	LinkMarket(store);
+	store.dispatch(Types.clearHot, true);
 	window.location.hash = "/default";
 }
 //接收到登录信息
@@ -173,9 +171,9 @@ export const getLoginInfo = (store, obj) => {
 			RshowRegist: false //注册显示
 		});
 		//用户登录后重置热门合约
-		//		martSrv.close();
-		//		LinkMarket(store);
-		//		store.dispatch(Types.clearHot, true);
+		martSrv.close();
+		LinkMarket(store);
+		store.dispatch(Types.clearHot, true);
 		//提示：缓存到本地
 		window.localStorage.account = Account;
 		window.localStorage.nick = obj.nick;

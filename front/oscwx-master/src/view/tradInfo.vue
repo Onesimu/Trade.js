@@ -29,6 +29,7 @@
 		<alert :show.sync="isAlert" title="提示" button-text="确定" @on-hide="onHide">
 			<p style="text-align:center;">请先登录账户</p>
 		</alert>
+
 		<div id=container_char style='padding-top:10px;'></div>
 		<div class=mh-group>
 			<ul>
@@ -46,8 +47,10 @@
 				</li>
 			</ul>
 		</div>
+
 	</div>
 </template>
+
 <style lang="less">
 	#tradInfo {
 		height: 100%;
@@ -374,8 +377,17 @@
 			}) {
 				this.key = id;
 				this.cur = cur;
+				//				candle(this.key, 1);
 			}
+			//			activate(transition) {
+			//				candle(transition.to.params.id, 1);
+			//			}
 		},
+		//		created() {
+		//			// 组件创建完后获取数据，
+		//			// 此时 data 已经被 observed 了
+		//			candle(this.key, 1);
+		//		},
 		events: {
 			"hide" () {
 				clearInterval(window.interval);

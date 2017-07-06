@@ -39,7 +39,7 @@
 		<alert :show.sync="isAlert" title="提示" button-text="确定">
 			<p style="text-align:center;">{{alertMsg}}</p>
 		</alert>
-		<loading-time :load-show="loadingShow"></loading-time>
+		<loading-time :load-show.sync="loadingShow"></loading-time>
 	</div>
 </template>
 <style lang="less">
