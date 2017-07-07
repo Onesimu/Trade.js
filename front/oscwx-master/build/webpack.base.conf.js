@@ -6,7 +6,7 @@ var vuxLoader = require('vux-loader')
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    entry: './src/main.js'
   },
   output: {
     path: config.build.assetsRoot,

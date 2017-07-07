@@ -119,18 +119,27 @@
 						return;
 					}
 				}
+				
 				if(winPrice == this.winPrice && lossPrice == this.lossPrice) {
 					this.cancel();
 					return;
 				}
-				this.isClick = true;
-
+				
 				var myDate = new Date();
 				var ymd = "" + myDate.getFullYear() + (myDate.getMonth() + 1) + myDate.getDate();
 				var hms = "" + myDate.getHours() + myDate.getMinutes() + myDate.getSeconds();
 				var temp = this.myHold[this.index];
 				var id = temp.id;
 				var code = temp.tradName;
+				
+				if(this.token == '') {
+					$("#priceHint").html("服务未准备好,请刷新页面后再试");
+					this.errPrice = true;
+					return;
+				}
+				
+				this.isClick = true;
+				
 				this.setWinLoss({
 					account: this.account,
 					code: code,

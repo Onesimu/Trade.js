@@ -300,7 +300,7 @@
 				this.getUserMoney(this.account);
 				this.setMyHold(this.account);
 			};
-			candle(this.key, 1);
+			candle(this.key, 5);
 		},
 		computed: {
 			yingkui() {

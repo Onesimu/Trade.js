@@ -15,7 +15,7 @@ router.beforeEach(function(trans) {
 	var path = trans.to.path;
 	if(path == "/default") {
 		setHeadMsg(store, {
-			title: "弈生隆交易系统",
+			title: "佳盛环球交易系统",
 			//title:"期盈外盘交易系统",
 			Lshow: false, //左侧返回箭头
 			Bshow: true, //底部的tabber

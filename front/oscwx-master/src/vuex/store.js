@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 const state = {
 	header: {
-		title: "弈生隆交易系统",
+		title: "佳盛环球交易系统",
 		Rtitle: "登录",
 		Rshow: true,
 		RshowRegist: true,

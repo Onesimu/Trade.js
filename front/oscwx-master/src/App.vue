@@ -14,7 +14,7 @@
 				<router-view></router-view>
 				<loading :show="!loadingState" :text="loadingText"></loading>
 				<tabbar slot="bottom" v-show="Bshow">
-					<tabbar-item v-link="{path:'/default'}" :selected="title=='弈生隆交易系统'">
+					<tabbar-item v-link="{path:'/default'}" :selected="title=='佳盛环球交易系统'">
 						<i slot="icon" class="tabbarItem iconfont icon-wxbzhuye"></i>
 						<span slot="label">首页</span>
 					</tabbar-item>

@@ -200,6 +200,13 @@
 					}
 				}
 
+				if(this.token == '') {
+					$("#orderHint").html("服务未准备好,请刷新页面后再试");
+					this.errPrice = true;
+					this.isClick = false;
+					return;
+				}
+
 				this.setOpenOrder({
 					account: this.account,
 					name: this.key,

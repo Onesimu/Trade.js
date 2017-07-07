@@ -1,29 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="IGNORE.manifest">
 
 	<head>
 		<meta charset="utf-8" />
-		<meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+		<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="0" />
-		<title>弈生隆交易系统</title>
+
+		<title>佳盛环球交易系统</title>
 	</head>
 
 	<body>
 		<!--[if lt IE 11]>
-<div>
-	<h1>您的浏览器版本太低,无法正常使用,请升级到最新版本</h1>
-</div>
+			<div>
+				<h1>您的浏览器版本太低,无法正常使用,请升级到最新版本</h1>
+			</div>
     	<![endif]-->
 		<div id="app"></div>
 		<!--<script src=3Party/jquery-1.8.3.min.js></script>-->
 		<script src=https://cdn.bootcss.com/zepto/1.2.0/zepto.js></script>
-		<script src=js/md5_1.js></script>
-		<script src=js/reconnecting-websocket.min.js></script>
-		<script src=js/common.js></script>
+		<script src=3Party/md5_1.js></script>
+		<script src=3Party/reconnecting-websocket.min.js></script>
 		<script src=highcharts/highstock.js></script>
-		<script src=js/chart.js></script>
+		<!--		<script id="common"></script>
+		<script>
+			document.getElementById("common").src = "js/chart.js" + "?t=" +
+				new Date().getTime()
+		</script>-->
+		<script>
+			document.write('<script ' + 'src=js/chart.js' + '?t=' +
+				new Date().getTime() + '></' + 'script>');
+		</script>
 		<script src=https://unpkg.com/vue@1.0.26/dist/vue.js></script>
 		<script src=https://unpkg.com/vuex@1.0.0/dist/vuex.js></script>
 		<script src=https://unpkg.com/vue-router@0.7.13/dist/vue-router.js></script>
