@@ -8,16 +8,8 @@
 			<x-button type="primary" :disabled="isClick" @click="login">登录</x-button>
 			<x-button @click="reset">重设密码</x-button>
 		</div>
-		<loading :show="loadShow" text="">
-			<p>请求处理中,请稍等......</p>
-			<p>{{daojishi}}s</p>
-		</loading>
 		<toast :show.sync="isShow" type="text">{{toastTxt}}</toast>
-		<alert :show.sync="isAlter" title="提示" button-text="确定">
-			<div style="text-align: center;">
-				{{{alterContent}}}
-			</div>
-		</alert>
+		<loading-time :load-show.sync="loadingShow" :time.sync="time"></loading-time>
 	</div>
 </template>
 <style lang="less">
@@ -40,6 +32,7 @@
 	import toast from "vux/src/components/toast"
 	import loading from "vux/src/components/loading"
 	import Alert from "vux/src/components/alert"
+	import LoadingTime from "component/LoadingTime"
 	export default {
 		vuex: {
 			getters: {
@@ -48,7 +41,6 @@
 				_isShow: (state) => state.loginState.isShowToast,
 				toastTxt: (state) => state.loginState.toastTxt,
 				loginCnt: (state) => state.loginState.loginCnt,
-				loginState: (state) => state.loginState
 			},
 			actions: {
 				LoginEvent,
@@ -59,11 +51,8 @@
 			return {
 				account: "",
 				pwd: "",
-				loadShow: false,
-				timeHandle: null,
-				time: 30,
-				isAlter: false,
-				alterContent: "网络超时"
+				loadingShow: false,
+				time: 30
 			}
 		},
 		ready() {
@@ -87,10 +76,7 @@
 					account: this.account,
 					pwd: this.pwd
 				});
-				this.loadShow = true;
-				this.start = true;
-				this.time = 30;
-				//				this.isAlter = false;
+				this.loadingShow = true;
 			},
 			reset() {
 				window.location.hash = "reset";
@@ -99,17 +85,9 @@
 		watch: {
 			'loginCnt': {
 				handler: function(val, oldVal) {
-					this.start = false;
-					this.time = 0;
-					this.loadShow = false;
-					//					this.isAlter = this._isShow;
-					//					if(this.toastTxt != "") {
-					//						this.alterContent = this.toastTxt;
-					//					} else {
-					//						this.alterContent = this.toastTxt;
-					//					}
+					this.loadingShow = false;
+					this.time = 30;
 				},
-				//				deep: true
 			}
 		},
 		events: {
@@ -126,30 +104,14 @@
 			isShow() {
 				return this._isShow;
 			},
-			daojishi() {
-				if(this.loadShow == false) {
-					return;
-				}
-				var self = this;
-				window.clearTimeout(this.timeHandle);
-				if(this.time == -1) {
-					//					this.time = 30;
-					this.loadShow = false;
-					this.isAlter = true;
-					return;
-				}
-				this.timeHandle = window.setTimeout(function() {
-					self.time--;
-				}, 1000);
-				return this.time;
-			}
 		},
 		components: {
 			xInput,
 			xButton,
 			toast,
 			loading,
-			Alert
+			Alert,
+			LoadingTime
 		}
 	}
 </script>

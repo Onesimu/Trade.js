@@ -20,25 +20,16 @@
 				type: Boolean,
 				default: false
 			},
-			title: String,
-			buttonText: {
-				type: String,
-				default: 'OK'
-			},
-			maskTransition: {
-				type: String,
-				default: 'vux-fade'
-			},
-			dialogTransition: {
-				type: String,
-				default: 'vux-dialog'
+			time: {
+				type: Number,
+				default: 30
 			}
 		},
 		data() {
 			return {
 				//				loadShow: false,
 				timeHandle: null,
-				time: 30,
+				//				time: 30,
 				isClick: false,
 				isAlter: false,
 				alterContent: '网络超时'

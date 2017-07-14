@@ -39,7 +39,7 @@
 		<alert :show.sync="isAlert" title="提示" button-text="确定">
 			<p style="text-align:center;">{{alertMsg}}</p>
 		</alert>
-		<loading-time :load-show.sync="loadingShow"></loading-time>
+		<loading-time :load-show.sync="loadingShow" :time.sync="time"></loading-time>
 	</div>
 </template>
 <style lang="less">
@@ -134,6 +134,7 @@
 				end: 0,
 				isAlert: false,
 				loadingShow: false,
+				time: 30,
 				alertMsg: '查询时间的跨度不要超过7天'
 			}
 		},
@@ -244,9 +245,10 @@
 			'res': {
 				handler: function(val, oldVal) {
 					this.loadingShow = false;
+					this.time = 30;
 					//					this.isClick = false;
 					//					this.isAlter = true;
-					
+
 					//					if(this.res.length > 90) {
 					//						this.alertMsg = '查询数据量较大时,部分数据可能显示不全'
 					//						this.isAlert = !this.isAlert;

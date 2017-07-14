@@ -60,11 +60,12 @@ export class Srv {
 			if(this.url.indexOf("market") >= 0) {
 				setMarketState(_this.store, true);
 				_this.getMarketData(_this.store.state.userInfo.account);
+				//				_this.setMarketFengKong(_this.store.state.userInfo.account);
 			}
 			//交易
-			if(this.url.indexOf("data") >= 0) {
-				setUserState(_this.store, true);
-			}
+			//			if(this.url.indexOf("data") >= 0) {
+			//				setUserState(_this.store, true);
+			//			}
 
 		};
 		this.socket.onerror = function(evt) {
@@ -76,9 +77,9 @@ export class Srv {
 				setMarketState(_this.store, true);
 			}
 			//交易
-			if(this.url.indexOf("data") >= 0) {
-				setUserState(_this.store, true);
-			}
+			//			if(this.url.indexOf("data") >= 0) {
+			//				setUserState(_this.store, true);
+			//			}
 			if(_this.repeat >= 0) {
 				//				_this.repeat--;
 				//				_this.init();
@@ -186,6 +187,7 @@ export class Srv {
 					//客户行情信息查询
 				case "30":
 					setMarkData(_this.store, arr[3]);
+					//					_this.setMarketFengKong(_this.store.state.userInfo.account);
 					break;
 					//行情推送接口
 				case "31":

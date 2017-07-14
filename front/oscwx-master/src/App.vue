@@ -102,9 +102,9 @@
 			this.LinkMarket(); //行情
 			//			this.LinkUser(); //交易
 			this.LinkTrade();
-			this.queryFengKong();
-			clearInterval(window.getFengKong);
-			window.getFengKong = setInterval(this.queryFengKong, 1000 * 60 * 10);
+//			this.queryFengKong();
+//			clearInterval(window.getFengKong);
+//			window.getFengKong = setInterval(this.queryFengKong, 1000 * 60 * 10);
 		},
 		components: {
 			viewBox,

@@ -93,6 +93,7 @@ export const setMarkData = ({
 		data[arr[i].code] = arr[i];
 	}
 	dispatch(Types.HotContract, data);
+//	tradeSrv.setMarketFengKong(Account);
 }
 //更新热门合约
 export const updateMark = ({
@@ -154,7 +155,8 @@ export const logoutEvent = (store) => {
 	//用户退出登录后重置热门合约
 	martSrv.close();
 	LinkMarket(store);
-	store.dispatch(Types.clearHot, true);
+	//	store.dispatch(Types.clearHot, true);
+	tradeSrv.setMarketFengKong(117069);
 	window.location.hash = "/default";
 }
 //接收到登录信息
@@ -173,7 +175,7 @@ export const getLoginInfo = (store, obj) => {
 		//用户登录后重置热门合约
 		martSrv.close();
 		LinkMarket(store);
-		store.dispatch(Types.clearHot, true);
+		//		store.dispatch(Types.clearHot, true);
 		//提示：缓存到本地
 		window.localStorage.account = Account;
 		window.localStorage.nick = obj.nick;
@@ -450,9 +452,9 @@ export const getOpenOrder = (state, obj) => {
 	openClick = false;
 	state.dispatch(Types.openOrder, obj);
 	//请求下持仓数据
-	if(obj.state === "00") {
-		setMyHold(state, Account);
-	}
+	//	if(obj.state === "00") {
+	//		setMyHold(state, Account);
+	//	}
 }
 //请求平仓的数据
 var pcId = "";
@@ -475,9 +477,9 @@ export const getPingCang = (state, obj) => {
 	obj.isShow = true;
 	state.dispatch(Types.pcOrder, obj);
 	//请求下持仓数据
-	if(obj.state === "00" && pcId == obj.id) {
-		setMyHold(state, Account);
-	}
+	//	if(obj.state === "00" && pcId == obj.id) {
+	//		setMyHold(state, Account);
+	//	}
 }
 //请求修改止盈
 export const setWinLoss = ({

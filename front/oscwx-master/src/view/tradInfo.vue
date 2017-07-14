@@ -4,7 +4,7 @@
 		<div class="viewTxt" v-if="hotData[key]">
 			<div class="row first" v-show="isLogin">
 				<span class="yue">最新权益:{{balance}}</span>
-				<span class="win">盈亏:{{yingkui}}</span>
+				<span class="win">总盈亏:{{yingkui}}</span>
 			</div>
 			<div class="row two">
 				<span class="tradName">
@@ -190,6 +190,14 @@
 		text-decoration: none;
 	}
 	
+	#container_char {
+		height: 360px;
+		width: 100%;
+		background-color: #262626;
+		padding-top: 10px;
+		margin-top: 10px
+	}
+	
 	.mh-group {
 		padding-top: 6px;
 	}
@@ -236,7 +244,8 @@
 			return {
 				key: "", //传送来的key,
 				cur: "", //币种
-				isAlert: false
+				isAlert: false,
+				getCandleTimeout: null
 			}
 		},
 		methods: {
@@ -300,7 +309,14 @@
 				this.getUserMoney(this.account);
 				this.setMyHold(this.account);
 			};
-			candle(this.key, 5);
+			this.getCandleTimeout = window.setTimeout(() => {
+				candle(this.key, 5);
+			}, 1);
+			$('#container_char').css({
+				height: $(window).height() - 350,
+				width: $(window).width()
+			});
+
 		},
 		computed: {
 			yingkui() {
@@ -391,12 +407,14 @@
 		events: {
 			"hide" () {
 				clearInterval(window.interval);
+				clearTimeout(this.getCandleTimeout);
 			}
 		},
 		beforeRouteLeave(to, from, next) {
 			// 导航离开该组件的对应路由时调用
 			// 可以访问组件实例 `this`
 			clearInterval(window.interval);
+			clearTimeout(this.getCandleTimeout);
 		}
 	}
 </script>

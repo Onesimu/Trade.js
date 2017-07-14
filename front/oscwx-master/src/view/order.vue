@@ -3,7 +3,8 @@
 		<template v-if="hotData[key]">
 			<group :title="tradName">
 				<cell title="最新价格" :value="newPrice"></cell>
-				<x-number title="购买手数" :value.sync="buyNum" :min=1 :max=10></x-number>
+				<!--<x-number title="购买手数" :value.sync="buyNum" :min=1 :max=10></x-number>-->
+				<selector title="购买手数" :value.sync="buyNum" :options="buyNumOptions"></selector>
 				<selector title="止盈止损" :value.sync="curSelect" :options="selectOptions"></selector>
 				<radio v-show="curSelect=='template'" :options="radioData" :value.sync="selectRadioData"></radio>
 				<switch v-show="curSelect=='point'" title="触发止损" :value.sync="isLow"></switch>
@@ -67,7 +68,7 @@
 			return {
 				type: 0, //买多（1）还是买空（-1）
 				key: 0,
-				buyNum: 1, //购买手数
+				buyNum: '1', //购买手数
 				isLow: false, //止损是否显示
 				lowPrice: 0, //止损价
 				isWin: false, //止盈是否显示
@@ -92,7 +93,8 @@
 				//                    {key:"2",value : "2倍保证金"}
 				//                ],
 				selectRadioData: "0.5",
-				token: ''
+				token: '',
+				buyNumOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 			}
 		},
 		vuex: {
@@ -125,7 +127,9 @@
 				//				window.orderClickTime = setTimeout(function() {
 				//					_this.isClick = false;
 				//				}, 1500);
-				if(isNaN(this.buyNum) || isNaN(this.winPrice) || isNaN(this.lowPrice)) {
+				//				let buyNum = parseInt(this.buyNum);
+				//isNaN(this.buyNum) || 
+				if(isNaN(this.winPrice) || isNaN(this.lowPrice)) {
 					$("#orderHint").html("请填写有效的数字,不能含有字母或其他字符");
 					this.errPrice = true;
 					this.isClick = false;
@@ -242,6 +246,9 @@
 			}
 		},
 		ready() {
+			$.post(getContextHost() + "/app/token", (data) => {
+				this.token = data;
+			});
 			//买多（1）还是买空（-1）
 			if(this.hotData[this.key].newPrice != 'none') {
 				this.lowPrice = this.winPrice = this.hotData[this.key].newPrice;
@@ -249,9 +256,11 @@
 			if(this.hotData[this.key].minUnit != 0) {
 				this.minUnit = this.hotData[this.key].minUnit;
 			}
-			$.post(getContextHost() + "/app/token", (data) => {
-				this.token = data;
-			});
+			if(this.hotData[this.key].cur == 'CNY') {
+				this.buyNumOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '30', '50', '100'];
+			} else {
+				this.buyNumOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+			}
 		},
 		computed: {
 			tradName() {
@@ -262,7 +271,8 @@
 			},
 			price() {
 				if(this.openOrder.price != '') {
-					return parseFloat(this.openOrder.price).toFixed(this.fixedDecimal(this.minUnit.toString()))
+					return parseFloat(this.openOrder.price);
+					//					return parseFloat(this.openOrder.price).toFixed(this.fixedDecimal(this.minUnit.toString()))
 				}
 				return this.openOrder.price;
 			},

@@ -77,7 +77,8 @@
 		computed: {
 			price() {
 				if(this.pcState.price != '') {
-					return parseFloat(this.pcState.price).toFixed(this.fixedDecimal(this.minUnit.toString()))
+					return parseFloat(this.pcState.price);
+					//					return parseFloat(this.pcState.price).toFixed(this.fixedDecimal(this.minUnit.toString()))
 				}
 				return this.pcState.price;
 			}
