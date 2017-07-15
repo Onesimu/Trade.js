@@ -101,18 +101,22 @@ const mutations = {
 	},
 	[Types.HotContract](state, obj) {
 		state.hotContract = obj;
+
 		for(let k in state.hotContract) {
 			for(let j in state.fengkong) {
-				if(k.indexOf(j) != -1) {
+				if(k.substring(0, k.lastIndexOf(' ')) == j) {
 					if(isNaN(state.hotContract[k].openCash)) {
-						state.hotContract[k].openCash = state.fengkong[j].openCash;
+						//						state.hotContract[k].openCashFK = state.fengkong[j].openCash;
+						Vue.set(state.hotContract[k], 'openCashFK', state.fengkong[j].openCash);
 					} else {
-						state.hotContract[k].openCash = Math.max(state.hotContract[k].openCash, state.fengkong[j].openCash);
+						//						state.hotContract[k].openCashFK = Math.max(state.hotContract[k].openCash, state.fengkong[j].openCash);
+						Vue.set(state.hotContract[k], 'openCashFK', Math.max(state.hotContract[k].openCash, state.fengkong[j].openCash));
 					}
-					state.hotContract[k].holdCash = Math.max(state.hotContract[k].holdCash, state.fengkong[j].holdCash);
+					state.hotContract[k].holdCashFK = Math.max(state.hotContract[k].holdCash, state.fengkong[j].holdCash);
 				}
 			}
 		}
+
 	},
 	[Types.UpdateMark](state, obj) {
 		if(state.hotContract[obj.code]) {
@@ -201,16 +205,20 @@ const mutations = {
 		state.fengkong = obj;
 		for(let k in state.hotContract) {
 			for(let j in obj) {
-				if(k.indexOf(j) != -1) {
+				if(k.substring(0, k.lastIndexOf(' ')) == j) {
+					//					state.hotContract[k].openCashFK = obj[j].openCash;
 					if(isNaN(state.hotContract[k].openCash)) {
-						state.hotContract[k].openCash = obj[j].openCash;
+						//						state.hotContract[k].openCashFK = obj[j].openCash;
+						Vue.set(state.hotContract[k], 'openCashFK', obj[j].openCash);
 					} else {
-						state.hotContract[k].openCash = Math.max(state.hotContract[k].openCash, obj[j].openCash);
+						//						state.hotContract[k].openCashFK = Math.max(state.hotContract[k].openCash, obj[j].openCash);
+						Vue.set(state.hotContract[k], 'openCashFK', Math.max(state.hotContract[k].openCash, obj[j].openCash));
 					}
-					state.hotContract[k].holdCash = Math.max(state.hotContract[k].holdCash, obj[j].holdCash);
+					state.hotContract[k].holdCashFK = obj[j].holdCash;
 				}
 			}
 		}
+
 		//		for(let k in state.hotContract) {
 		//			state.hotContract[k].openCashFK = state.hotContract[k].openCashFK > state.hotContract[k].openCash ? parseFloat(state.hotContract[k].openCashFK).toFixed(2) : parseFloat(state.hotContract[k].openCash).toFixed(2);
 		//			state.hotContract[k].holdCashFK = state.hotContract[k].holdCashFK > state.hotContract[k].holdCash ? parseFloat(state.hotContract[k].holdCashFK).toFixed(2) : parseFloat(state.hotContract[k].holdCash).toFixed(2);

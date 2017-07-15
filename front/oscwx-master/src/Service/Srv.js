@@ -186,7 +186,9 @@ export class Srv {
 					break;
 					//客户行情信息查询
 				case "30":
-					setMarkData(_this.store, arr[3]);
+					if(_this.store.state.userInfo.account == arr[1]) {
+						setMarkData(_this.store, arr[3]);
+					}
 					//					_this.setMarketFengKong(_this.store.state.userInfo.account);
 					break;
 					//行情推送接口

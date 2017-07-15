@@ -2,6 +2,15 @@
 <html lang="en" manifest="IGNORE.manifest">
 
 	<head>
+		<script>
+			if(window.location.search != '') {
+				window.location.search = '';
+			}
+			let index = window.location.hash.indexOf('?');
+			if(index != -1) {
+				window.location.hash = window.location.hash.substring(0, index);
+			}
+		</script>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 

@@ -16,7 +16,7 @@
 					</p>
 					<p :class="['tradPrice',{'tradPriceGreen':item.upDown < 0},{'tradPriceNo':item.newPrice=='none'}]">{{item.newPrice == "none" ? '--':item.newPrice}}</p>
 					<p class="openCashLabel">
-						{{ item.openCash }}
+						{{ item.openCashFK || item.openCash }}
 					</p>
 				</li>
 			</ul>
@@ -45,6 +45,12 @@
 		},
 		methods: {
 			fengKong(item) {
+				if(isNaN(item.openCash)) {
+					return item.openCashFK;
+				}
+				if(!item.openCashFK) {
+					return item.openCash;
+				}
 				return item.openCashFK > item.openCash ? parseFloat(item.openCashFK).toFixed(2) : parseFloat(item.openCash).toFixed(2)
 			},
 			queryFengKong() {
