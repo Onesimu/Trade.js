@@ -94,7 +94,7 @@
 				if(this.isLogin) {
 					this.setMarketFengKong(this.account);
 				} else {
-					this.setMarketFengKong(117069);
+					this.setMarketFengKong(11076);
 				}
 			}
 		},

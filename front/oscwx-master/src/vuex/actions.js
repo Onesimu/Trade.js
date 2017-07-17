@@ -93,7 +93,7 @@ export const setMarkData = ({
 		data[arr[i].code] = arr[i];
 	}
 	dispatch(Types.HotContract, data);
-//	tradeSrv.setMarketFengKong(Account);
+	//	tradeSrv.setMarketFengKong(Account);
 }
 //更新热门合约
 export const updateMark = ({
@@ -156,7 +156,7 @@ export const logoutEvent = (store) => {
 	martSrv.close();
 	LinkMarket(store);
 	//	store.dispatch(Types.clearHot, true);
-	tradeSrv.setMarketFengKong(117069);
+	tradeSrv.setMarketFengKong(11076);
 	window.location.hash = "/default";
 }
 //接收到登录信息
@@ -271,6 +271,10 @@ export const getMarketFengKong = (store, str) => {
 						fengKongInfo[tradeType[item][timeItem].code].holdCashTime = tradeType[item][timeItem].start + '-' + tradeType[item][timeItem].end;
 					}
 
+					if(fengKongInfo[tradeType[item][timeItem].code].openCashTime == fengKongInfo[tradeType[item][timeItem].code].holdCashTime) {
+						fengKongInfo[tradeType[item][timeItem].code].start = tradeType[item][timeItem].start;
+						fengKongInfo[tradeType[item][timeItem].code].end = tradeType[item][timeItem].end;
+					}
 				} else {
 					fengKongInfo[tradeType[item][timeItem].code] = tradeType[item][timeItem];
 				}

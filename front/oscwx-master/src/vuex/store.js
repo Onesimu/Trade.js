@@ -2,6 +2,7 @@
  * Created by kaiser on 2016/9/10.
  */
 import * as Types from "./types"
+import DateFormatter from 'vux/src/components/datetime/format'
 Vue.use(Vuex);
 
 const state = {
@@ -204,6 +205,19 @@ const mutations = {
 	[Types.fengkongInfo](state, obj) {
 		state.fengkong = obj;
 		for(let k in state.hotContract) {
+			if(state.hotContract[k].openCashFK) {
+				let nowTime = DateFormatter(new Date(), 'HH:mm:ss');
+				let startTime = state.hotContract[k].start;
+				let endTime = state.hotContract[k].end;
+				if(!((startTime > endTime && (nowTime >= startTime || nowTime <= endTime)) || ((startTime < endTime) && (nowTime > startTime && endTime > nowTime)))) {
+					Vue.delete(state.hotContract[k], 'openCashFK');
+					//					delete state.hotContract[k].openCashFK;
+					delete state.hotContract[k].FKstart;
+					delete state.hotContract[k].FKend;
+				}
+			}
+		}
+		for(let k in state.hotContract) {
 			for(let j in obj) {
 				if(k.substring(0, k.lastIndexOf(' ')) == j) {
 					//					state.hotContract[k].openCashFK = obj[j].openCash;
@@ -214,6 +228,8 @@ const mutations = {
 						//						state.hotContract[k].openCashFK = Math.max(state.hotContract[k].openCash, obj[j].openCash);
 						Vue.set(state.hotContract[k], 'openCashFK', Math.max(state.hotContract[k].openCash, obj[j].openCash));
 					}
+					state.hotContract[k].FKstart = obj[j].start;
+					state.hotContract[k].FKend = obj[j].end;
 					state.hotContract[k].holdCashFK = obj[j].holdCash;
 				}
 			}
