@@ -64,6 +64,7 @@
 			}
 		},
 		ready() {
+			//			window.history.forward(1);
 			var key = this.myHold[this.index].tradName;
 			if(this.hotContract[key] && this.hotContract[key].minUnit != 0) {
 				this.minUnit = this.hotContract[key].minUnit;
@@ -119,27 +120,27 @@
 						return;
 					}
 				}
-				
+
 				if(winPrice == this.winPrice && lossPrice == this.lossPrice) {
 					this.cancel();
 					return;
 				}
-				
+
 				var myDate = new Date();
 				var ymd = "" + myDate.getFullYear() + (myDate.getMonth() + 1) + myDate.getDate();
 				var hms = "" + myDate.getHours() + myDate.getMinutes() + myDate.getSeconds();
 				var temp = this.myHold[this.index];
 				var id = temp.id;
 				var code = temp.tradName;
-				
+
 				if(this.token == '') {
-					$("#priceHint").html("服务未准备好,请刷新页面后再试");
+					$("#priceHint").html("页面超时,请刷新页面后再试");
 					this.errPrice = true;
 					return;
 				}
-				
+
 				this.isClick = true;
-				
+
 				this.setWinLoss({
 					account: this.account,
 					code: code,
@@ -153,7 +154,8 @@
 				return;
 			},
 			cancel() {
-				window.location.hash = "/myHold/" + this.index;
+				//				window.location.hash = "/myHold/" + this.index;
+				window.location.replace(getContextHost() + '/#!' + "/myHold/" + this.index);
 			},
 			onHide() {
 				this.cancel();

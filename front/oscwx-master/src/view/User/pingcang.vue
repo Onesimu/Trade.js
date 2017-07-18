@@ -84,6 +84,7 @@
 			}
 		},
 		ready() {
+			//			window.history.forward(1);
 			$.post(getContextHost() + "/app/token", (data) => {
 				this.token = data;
 			});
@@ -125,7 +126,7 @@
 				var dir = 0 - (parseInt(temp.direction));
 
 				if(this.token == '') {
-					$("#orderHint").html("服务未准备好,请刷新页面后再试");
+					$("#orderHint").html("页面超时,请刷新页面后再试");
 					this.errPrice = true;
 					this.isClick = false;
 					return;
@@ -144,14 +145,16 @@
 				return;
 			},
 			cancel() {
-				window.location.hash = "/myHold/" + this.index;
+				//				window.location.hash = "/myHold/" + this.index;
+				window.location.replace(getContextHost() + '/#!' + "/myHold/" + this.index);
 			},
 			onHide() {
 				var index = this.index;
 				if(this.pcState.state == "00") {
 					index = 0;
 				}
-				window.location.hash = "/myHold/" + index;
+				//				window.location.hash = "/myHold/" + index;
+				window.location.replace(getContextHost() + '/#!' + "/myHold/" + index);
 			},
 			fixedDecimal(value) {
 				if(value != null && value != '') {

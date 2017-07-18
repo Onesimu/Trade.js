@@ -205,7 +205,7 @@
 				}
 
 				if(this.token == '') {
-					$("#orderHint").html("服务未准备好,请刷新页面后再试");
+					$("#orderHint").html("页面超时,请刷新页面后再试");
 					this.errPrice = true;
 					this.isClick = false;
 					return;
@@ -227,12 +227,14 @@
 			},
 			onHide() {
 				//				window.history.go(-1);
-				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
+				//				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
+				window.location.replace(getContextHost() + '/#!' + "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur);
 				//				this.cancel();
 				//				v-link="{ name: 'tradInfo', params: { id: item.code,name:item.cn,cur:item.cur}}"
 			},
 			cancel() {
-				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
+				//				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
+				window.location.replace(getContextHost() + '/#!' + "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur);
 			},
 			fixedDecimal(value) {
 				if(value != null && value != '') {
@@ -246,6 +248,7 @@
 			}
 		},
 		ready() {
+			//			window.history.forward(1);
 			$.post(getContextHost() + "/app/token", (data) => {
 				this.token = data;
 			});

@@ -40,6 +40,11 @@ router.beforeEach(function(trans) {
 		trans.next();
 //		candle(trans.to.params.id, 1);
 	} else if(path == "/login") {
+		if(store.state.userInfo.isLogin) {
+//			router.go("/user");
+			router.go(-1);
+			return;
+		}
 		setHeadMsg(store, {
 			title: "登录",
 			Lshow: true,

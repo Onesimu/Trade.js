@@ -13,7 +13,12 @@
 			<x-button type="primary" @click="resetEvent">修改</x-button>
 			<x-button @click="cancel">取消</x-button>
 		</div>
-		<toast :show.sync="isShow" type="text">{{toastTxt}}</toast>
+		<!--<toast :show.sync="isShow" type="text">{{toastTxt}}</toast>-->
+		<alert :show.sync="isShow" title="提示" button-text="确定" @on-hide="onHide">
+			<div style="text-align: center;">
+				{{toastTxt}}
+			</div>
+		</alert>
 		<alert :show.sync="isAlter" title="提示" button-text="确定">
 			<div style="text-align: center;">
 				{{{alterContent}}}
@@ -88,6 +93,14 @@
 			},
 			cancel() {
 				window.location.hash = "login";
+			},
+			onHide() {
+				this.getUserPwd({
+					isShowToast: false
+				});
+				if(this.errno == "00") {
+					window.location.hash = "login";
+				}
 			}
 		},
 		events: {

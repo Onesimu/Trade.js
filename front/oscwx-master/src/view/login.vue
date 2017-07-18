@@ -8,7 +8,12 @@
 			<x-button type="primary" :disabled="isClick" @click="login">登录</x-button>
 			<x-button @click="reset">重设密码</x-button>
 		</div>
-		<toast :show.sync="isShow" type="text">{{toastTxt}}</toast>
+		<!--<toast :show.sync="isShow" type="text">{{toastTxt}}</toast>-->
+		<alert :show.sync="isShow" title="提示" button-text="确定" @on-hide="onHide">
+			<div style="text-align: center;">
+				{{toastTxt}}
+			</div>
+		</alert>
 		<loading-time :load-show.sync="loadingShow" :time.sync="time"></loading-time>
 	</div>
 </template>
@@ -56,6 +61,7 @@
 			}
 		},
 		ready() {
+//			window.history.forward(1);
 			if(window.localStorage.account) {
 				this.account = window.localStorage.account;
 			}
@@ -80,6 +86,11 @@
 			},
 			reset() {
 				window.location.hash = "reset";
+			},
+			onHide() {
+				this.LoginState({
+					isShowToast: false
+				})
 			}
 		},
 		watch: {
