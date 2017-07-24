@@ -14,6 +14,11 @@
 				{{toastTxt}}
 			</div>
 		</alert>
+		<alert :show.sync="isAlter" title="提示" button-text="确定">
+			<div style="text-align: center;">
+				{{{alterContent}}}
+			</div>
+		</alert>
 		<loading-time :load-show.sync="loadingShow" :time.sync="time"></loading-time>
 	</div>
 </template>
@@ -57,11 +62,13 @@
 				account: "",
 				pwd: "",
 				loadingShow: false,
-				time: 30
+				time: 30,
+				isAlter: false,
+				alterContent: "",
 			}
 		},
 		ready() {
-//			window.history.forward(1);
+			//			window.history.forward(1);
 			if(window.localStorage.account) {
 				this.account = window.localStorage.account;
 			}
@@ -72,6 +79,16 @@
 		methods: {
 			login() {
 				if(this.account == "" || this.pwd == "") {
+					return;
+				}
+				if(this.account.length > 6 || isNaN(this.account)) {
+					this.alterContent = '账户格式不正确';
+					this.isAlter = true;
+					return;
+				}
+				if(this.pwd.length > 8) {
+					this.alterContent = '密码长度不能超过8位';
+					this.isAlter = true;
 					return;
 				}
 				this.LoginState({

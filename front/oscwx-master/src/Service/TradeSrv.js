@@ -37,14 +37,46 @@ export class TradeSrv {
 		data[41] = "phone";
 		return data;
 	}
+
 	sendMsg(data) {
 		var str = data.join("/");
 		var len = str.length + 32;
+		if(data[0] == '13') {
+			let lenZh = this.getBytesLength(str) + 32;
+			if(len != lenZh) {
+				len = lenZh;
+			}
+		}
+		//只适合GBK编码,对UTF-8编码不适用,UTF-8编码的汉字一般为3或4个字节
+		//var len = str.replace(/[^\x00-\xff]/g, 'xx').length + 32;
 		var temp = Array(4 - ('' + len).length + 1).join(0) + len;
 		//var start = temp + str;
 		var end = md5(str + this.key);
 		let newStr = temp + str + end;
 		return newStr;
+	}
+
+	//字符编码数值对应的存储长度：     
+	//UCS-2编码(16进制) UTF-8 字节流(二进制)    
+	//0000 - 007F       0xxxxxxx （1字节）     
+	//0080 - 07FF       110xxxxx 10xxxxxx （2字节）     
+	//0800 - FFFF       1110xxxx 10xxxxxx 10xxxxxx （3字节）    
+	getBytesLength(str) {
+		var totalLength = 0;
+		var charCode;
+		for(var i = 0; i < str.length; i++) {
+			charCode = str.charCodeAt(i);
+			if(charCode < 0x007f) {
+				totalLength++;
+			} else if((0x0080 <= charCode) && (charCode <= 0x07ff)) {
+				totalLength += 2;
+			} else if((0x0800 <= charCode) && (charCode <= 0xffff)) {
+				totalLength += 3;
+			} else {
+				totalLength += 4;
+			}
+		}
+		return totalLength;
 	}
 
 	//用户登录

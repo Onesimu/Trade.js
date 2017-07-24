@@ -76,6 +76,11 @@
 					this.isAlter = true;
 					return;
 				}
+				if(this.account.length > 6 || isNaN(this.account)) {
+					this.alterContent = '账户格式不正确';
+					this.isAlter = true;
+					return;
+				}
 				if(this.newPwd.length > 8) {
 					this.alterContent = '密码长度不能超过8位';
 					this.isAlter = true;

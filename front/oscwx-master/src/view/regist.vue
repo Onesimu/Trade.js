@@ -114,6 +114,26 @@
 					this.isAlter = true;
 					return;
 				}
+				if(this.name.length > 6) {
+					this.alterContent = '用户名过长';
+					this.isAlter = true;
+					return;
+				}
+				if(this.blankNum.length > 20 || isNaN(this.blankNum)) {
+					this.alterContent = '银行卡号格式不正确';
+					this.isAlter = true;
+					return;
+				}
+				if(this.blankName.length > 15) {
+					this.alterContent = '开户行名字过长';
+					this.isAlter = true;
+					return;
+				}
+				if(this.tel.length > 12 || isNaN(this.tel)) {
+					this.alterContent = '手机号码格式不正确';
+					this.isAlter = true;
+					return;
+				}
 				this.setRegistUser({
 					name: this.name,
 					blankName: this.blankName,
