@@ -146,7 +146,8 @@
 			},
 			cancel() {
 				//				window.location.hash = "/myHold/" + this.index;
-				window.location.replace(getContextHost() + '/#!' + "/myHold/" + this.index);
+				//				window.location.replace(getContextHost() + '/#!' + "/myHold/" + this.index);
+				router.replace("/myHold/" + this.index);
 			},
 			onHide() {
 				var index = this.index;

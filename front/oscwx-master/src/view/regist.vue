@@ -18,7 +18,7 @@
 			<p>注册中</p>
 			<p>{{daojishi}}s</p>
 		</loading>
-		<alert :show.sync="isAlter" title="提示" button-text="确定">
+		<alert :show.sync="isAlter" title="提示" button-text="确定" @on-hide="onHide">
 			<div style="text-align: center;">
 				{{{alterContent}}}
 			</div>
@@ -57,8 +57,14 @@
 				isAlter: false,
 				alterContent: "",
 				timeHandle: null,
-				time: 30
+				time: 30,
+				token: ''
 			}
+		},
+		ready() {
+			$.post(getContextHost() + "/app/token", (data) => {
+				this.token = data;
+			});
 		},
 		watch: {
 			'registInfo': {
@@ -76,6 +82,9 @@
 					} else {
 						this.alterContent = '注册未成功';
 					}
+					$.post(getContextHost() + "/app/token", (data) => {
+						this.token = data;
+					});
 				},
 				deep: true
 			}
@@ -134,16 +143,30 @@
 					this.isAlter = true;
 					return;
 				}
+				if(this.token == '') {
+					this.alterContent = '页面超时,请刷新页面后再试';
+					this.isAlter = true;
+					return;
+				}
 				this.setRegistUser({
 					name: this.name,
 					blankName: this.blankName,
 					blankNum: this.blankNum,
 					tel: this.tel,
 					tuijianNum: this.tuijianNum
-				});
+				}, this.token);
+				this.token = '';
 				this.loadShow = true;
 				this.start = true;
 				this.time = 30;
+			},
+			onHide() {
+				if(this.registInfo.stateNo == "00") {
+					router.replace('/login');
+					//					window.location.replace(getContextHost() + '/#!' + "/myHold/" + index);
+					//					router.go(-1);
+				}
+				//				window.location.hash = "/myHold/" + index;
 			}
 		}
 	}

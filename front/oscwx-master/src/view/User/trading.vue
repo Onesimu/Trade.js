@@ -149,7 +149,7 @@
 		},
 		ready() {
 			let date = this.nowDate();
-			//			this.getTrading(date, date);
+			this.getTrading(date, date);
 		},
 		methods: {
 			getTrading(start, end) {

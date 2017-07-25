@@ -555,9 +555,9 @@ export const getMoneyTrans = (state, obj) => {
 //开户申请
 export const setRegistUser = ({
 	dispatch
-}, obj) => {
+}, obj, token) => {
 	//	userSrv.setRegistUser(obj);
-	tradeSrv.setRegistUser(obj);
+	tradeSrv.setRegistUser(obj, token);
 }
 //接收开户申请返回数据
 export const getRegistUser = (state, obj) => {

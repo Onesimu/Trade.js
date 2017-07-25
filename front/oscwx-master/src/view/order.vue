@@ -234,7 +234,9 @@
 			},
 			cancel() {
 				//				window.location.hash = "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur;
-				window.location.replace(getContextHost() + '/#!' + "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur);
+				//				window.location.replace(getContextHost() + '/#!' + "/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur);
+				//				router.go(-1);
+				router.replace("/tradInfo/" + this.key + "/" + this.hotData[this.key].cn + "/" + this.hotData[this.key].cur)
 			},
 			fixedDecimal(value) {
 				if(value != null && value != '') {

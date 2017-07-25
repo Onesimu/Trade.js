@@ -468,7 +468,7 @@ export class TradeSrv {
 		});
 	}
 	//开户申请
-	setRegistUser(obj) {
+	setRegistUser(obj, token) {
 		var data = this.createData();
 		data[0] = '13';
 		data[1] = '66666';
@@ -479,8 +479,9 @@ export class TradeSrv {
 		data[54] = obj.tuijianNum;
 		var str = this.sendMsg(data);
 		//		this.socket.send(str);
-		$.post(getContextHost() + "/app/service/info", {
-			val: str
+		$.post(getContextHost() + "/app/service/trade", {
+			val: str,
+			token: token
 		}, (data) => {
 			var arr = data.split("/");
 			var typeNum = arr[0].substr(4);
