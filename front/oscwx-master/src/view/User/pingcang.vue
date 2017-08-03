@@ -155,7 +155,8 @@
 					index = 0;
 				}
 				//				window.location.hash = "/myHold/" + index;
-				window.location.replace(getContextHost() + '/#!' + "/myHold/" + index);
+				//				window.location.replace(getContextHost() + '/#!' + "/myHold/" + index);
+				this.cancel();
 			},
 			fixedDecimal(value) {
 				if(value != null && value != '') {
