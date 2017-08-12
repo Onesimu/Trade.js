@@ -307,7 +307,7 @@
 		ready() {
 			if(this.isLogin) {
 				this.getUserMoney(this.account);
-				this.setMyHold(this.account);
+//				this.setMyHold(this.account);
 			};
 			this.getCandleTimeout = window.setTimeout(() => {
 				candle(this.key, 5);
